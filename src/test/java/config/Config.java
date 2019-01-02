@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
-  @Bean
-  public Foo foo() {
-    return new Foo("from config");
-  }
+    @Bean
+    public Foo foo() {
+        return new Foo("from config");
+    }
 }
