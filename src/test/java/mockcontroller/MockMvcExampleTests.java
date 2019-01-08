@@ -15,9 +15,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * 对bean的mock测试
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Application.class})// 指定启动类
 @AutoConfigureMockMvc
@@ -34,4 +31,10 @@ public class MockMvcExampleTests {
                 .andDo(MockMvcResultHandlers.print());
     }
 
+    @Test
+    public void exampleTest1() throws Exception {
+        this.mvc.perform(get("/hello1")).andExpect(status().isOk())
+                .andExpect(content().string("aopResult"))
+                .andDo(MockMvcResultHandlers.print());
+    }
 }

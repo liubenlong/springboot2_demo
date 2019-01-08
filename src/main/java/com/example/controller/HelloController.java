@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.pojo.Person;
 import com.example.pojo.Stu;
+import com.example.service.HelloService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ public class HelloController {
     private Stu stu;
     @Autowired
     private Person person;
+    @Autowired
+    private HelloService helloService;
 
     @GetMapping("/properties1")
     public String properties1() {
@@ -32,5 +35,9 @@ public class HelloController {
         return "Welcome to springboot2 world ~";
     }
 
+    @GetMapping("/hello1")
+    public String hello1() {
+        return helloService.getVal();
+    }
 
 }
