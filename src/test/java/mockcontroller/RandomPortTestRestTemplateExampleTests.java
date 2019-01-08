@@ -1,4 +1,7 @@
+package mockcontroller;
+
 import com.example.Application;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +14,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 测试基于普通springmvc的运行的controller服务
+ * 无需启动web服务
  */
 @RunWith(SpringRunner.class)
 //使用随机端口
 @SpringBootTest(classes = Application.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+@Slf4j
 public class RandomPortTestRestTemplateExampleTests {
 
     @Autowired
@@ -25,5 +30,4 @@ public class RandomPortTestRestTemplateExampleTests {
         String body = this.restTemplate.getForObject("/hello", String.class);
         assertThat(body).isEqualTo("Welcome to springboot2 world ~");
     }
-
 }

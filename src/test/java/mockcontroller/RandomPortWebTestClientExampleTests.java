@@ -1,3 +1,5 @@
+package mockcontroller;
+
 import com.example.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 /**
  * 测试基于webflux异步非阻塞的的运行的controller服务
+ * 无用启动web服务。
  * 这个需要将spring-boot-starter-web替换为spring-boot-starter-webflux
  */
 @RunWith(SpringRunner.class)

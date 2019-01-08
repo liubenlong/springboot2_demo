@@ -1,7 +1,7 @@
 package propertiestest;
 
-import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,11 +16,14 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * 对@PropertySource加载的属性进行mock测试
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
-@ContextConfiguration(classes = PropertySourceConfig.class)
-@TestPropertySource(
+@ContextConfiguration(classes = PropertySourceConfig.class) //加载属性配置
+@TestPropertySource( // 对属性进行设置
         properties = {"lastName=abc", "bar=uvw"}
 )
 public class PropertySourceTest1 implements EnvironmentAware {
@@ -29,7 +32,7 @@ public class PropertySourceTest1 implements EnvironmentAware {
 
     @Test
     public void test1() {
-        TestCase.assertEquals(environment.getProperty("lastName"), "abc");
+        Assert.assertEquals(environment.getProperty("lastName"), "abc");
     }
 
 
