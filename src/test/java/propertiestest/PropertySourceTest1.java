@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -24,15 +25,20 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @ContextConfiguration(classes = PropertySourceConfig.class) //加载属性配置
 @TestPropertySource( // 对属性进行设置
-        properties = {"lastName=abc", "bar=uvw"}
+        properties = {"bar=uvw"},
+        locations = "classpath:test-property-source.yml"
 )
 public class PropertySourceTest1 implements EnvironmentAware {
 
     private Environment environment;
 
+    @Value("${testp}")
+    String testp;
+
     @Test
     public void test1() {
         Assert.assertEquals(environment.getProperty("lastName"), "abc");
+        Assert.assertEquals(testp, "123456789");
     }
 
 

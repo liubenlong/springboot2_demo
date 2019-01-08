@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Application.class})// 指定启动类
 @Slf4j
-public class MyTests {
+public class MyCommonTest {
     @Autowired
     private Person person;
     @Autowired
