@@ -105,7 +105,7 @@ public class StuController {
      */
     @GetMapping("/testTransactional")
     public void testTransactional() {
-        stuService.createStu();
+        stuService.createStu4Transactional();
     }
 
 }
