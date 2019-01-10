@@ -11,7 +11,7 @@ spring:
       url: jdbc:mysql://127.0.0.1:3306/test?charset=utf8mb4&useSSL=false
       username: root
       password: lbl0168
-      #配置初始化大小/最小/最大
+      #配置初始化大小/最小/最大[仅用于测试，生成环境需要修改哦]
       initial-size: 1
       min-idle: 1
       max-active: 20
@@ -31,7 +31,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.example.smybatis.model
+
 
 #pagehelper
 pagehelper:

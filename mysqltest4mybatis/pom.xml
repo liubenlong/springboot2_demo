@@ -8,7 +8,6 @@
     <packaging>jar</packaging>
     <name>mysqltest4mybatis</name>
 
-
     <parent>
         <groupId>com.lbl</groupId>
         <artifactId>springboot2demo</artifactId>
@@ -45,9 +44,6 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
         </dependency>
-
-
-
 
 
         <dependency>
