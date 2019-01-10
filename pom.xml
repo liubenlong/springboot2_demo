@@ -20,8 +20,8 @@
     </properties>
 
     <modules>
-        <!--<module>helloworld</module>-->
-        <module>mysqltest</module>
+        <module>helloworld</module>
+        <!--<module>mysqltest</module>-->
     </modules>
 
     <dependencyManagement>
