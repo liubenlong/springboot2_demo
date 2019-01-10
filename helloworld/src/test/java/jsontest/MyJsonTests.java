@@ -1,3 +1,5 @@
+package jsontest;
+
 import com.example.Application;
 import com.example.pojo.Stu;
 import org.junit.Test;
