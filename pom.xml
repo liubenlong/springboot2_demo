@@ -21,9 +21,10 @@
 
     <modules>
         <!--<module>helloworld</module>-->
-        <module>mysqltest4jpa</module>
+        <!--<module>mysqltest4jpa</module>-->
         <!--<module>mysqltest4mybatis</module>-->
         <!--<module>mysqltest4mybatis2dswaring</module>-->
+        <module>mysqltest4mybatis2dsok</module>
     </modules>
 
     <dependencyManagement>

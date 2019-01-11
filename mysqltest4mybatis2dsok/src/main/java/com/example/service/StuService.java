@@ -1,7 +1,8 @@
 package com.example.service;
 
-import com.example.mapper.CatMapper;
-import com.example.mapper.StuMapper;
+import com.example.mapper.master.StuMapper;
+import com.example.mapper.second.CatMapper;
+import com.example.mapper.second.StuSecondMapper;
 import com.example.model.Cat;
 import com.example.model.Stu;
 import com.example.model.StuExample;
@@ -20,6 +21,8 @@ public class StuService {
 
     @Autowired
     private StuMapper stuMapper;
+    @Autowired
+    private StuSecondMapper stuSecondMapper;
     @Autowired
     private CatMapper catMapper;
 
@@ -66,22 +69,30 @@ public class StuService {
 
     /**
      * 测试多数据源事务
-     * 使用AbstractRoutingDataSource路由，事务测试失败？？？？？
-     *
+     * transactionManager指定哪个数据源使用事务，不指定默认则默认数据源使用事务
      * @param str
      */
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class, transactionManager = "secondTransactionManager")
     public void modify4multipleds(String str) {
-        Stu stu = stuMapper.selectByPrimaryKey(5);
+        Stu stu = stuMapper.selectByPrimaryKey(2);
         stu.setAddress(str);
         int i = stuMapper.updateByPrimaryKey(stu);
-        log.info(i + "");
 
-        Cat cat = catMapper.selectByPrimaryKey(1);
+        Cat cat = catMapper.selectByPrimaryKey(2);
         cat.setColor(str);
         int i1 = catMapper.updateByPrimaryKey(cat);
 
-        log.info(i1 + "");
+        int a = 1/0;//模拟异常
+
+        stu = stuMapper.selectByPrimaryKey(2);
+        stu.setAddress(str + "__2");
+        i = stuMapper.updateByPrimaryKey(stu);
+        log.info(i + "");
+
+        cat = catMapper.selectByPrimaryKey(2);
+        cat.setColor(str + "__2");
+        i1 = catMapper.updateByPrimaryKey(cat);
+
     }
 
 

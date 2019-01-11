@@ -54,11 +54,15 @@ public class HelloController {
     }
 
 
-
-
-    @GetMapping("/findCats")
-    public List<Cat> findCats() {
-        return catService.findAll();
+    /**
+     * 第二个数据源
+     * @return
+     */
+    @GetMapping("/modifyCat")
+    public int modifyCat() {
+        Cat cat = catService.findByPK(2);
+        cat.setName("zzzzzzzzz");
+        return catService.updateByPrimaryKey(cat);
     }
 
     @GetMapping("/modify4multipleds")

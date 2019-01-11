@@ -1,7 +1,6 @@
 package com.example.service;
 
-import com.example.config.TargetDataSource;
-import com.example.mapper.CatMapper;
+import com.example.mapper.second.CatMapper;
 import com.example.model.Cat;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class CatService {
         return catMapper.selectByExample(null);
     }
 
-    public Cat findOne(int id) {
+    public Cat findByPK(int id) {
         return catMapper.selectByPrimaryKey(id);
     }
 

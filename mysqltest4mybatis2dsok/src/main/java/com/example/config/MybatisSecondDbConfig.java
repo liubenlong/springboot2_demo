@@ -10,45 +10,38 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = {"com.example.mapper.master"}, sqlSessionTemplateRef = "masterSqlSessionTemplate")
-public class MybatisMasterDbConfig {
-
+@MapperScan(basePackages = {"com.example.mapper.second"}, sqlSessionTemplateRef = "secondSqlSessionTemplate")
+public class MybatisSecondDbConfig {
 
     @Bean
-    //默认数据源
-    @Primary
-    //类型安全的属性配置
-    @ConfigurationProperties(prefix = "spring.datasource.druid")
-    public DataSource mysqDataSource() {
-        //通过DataSourceBuilder构建数据源
+    @Qualifier("ds2")//指定bean的名称
+    @ConfigurationProperties(prefix = "spring.datasource.ds2.druid")
+    public DataSource oracleDataSource() {
         return DataSourceBuilder.create().type(DruidDataSource.class).build();
     }
 
-    @Bean(name = "masterSqlSessionFactory")
-    @Primary
-    public SqlSessionFactory masterSqlSessionFactory(DataSource dataSource) throws Exception {
+
+    @Bean(name = "secondSqlSessionFactory")
+    public SqlSessionFactory secondSqlSessionFactory(@Qualifier("ds2") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapping/master/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapping/second/*.xml"));
         return bean.getObject();
     }
 
-    @Bean(name = "masterTransactionManager")
-    @Primary
-    public DataSourceTransactionManager masterTransactionManager(DataSource dataSource) {
+    @Bean(name = "secondTransactionManager")
+    public DataSourceTransactionManager secondTransactionManager(@Qualifier("ds2") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "masterSqlSessionTemplate")
-    @Primary
-    public SqlSessionTemplate masterSqlSessionTemplate(@Qualifier("masterSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    @Bean(name = "secondSqlSessionTemplate")
+    public SqlSessionTemplate secondSqlSessionTemplate(@Qualifier("secondSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

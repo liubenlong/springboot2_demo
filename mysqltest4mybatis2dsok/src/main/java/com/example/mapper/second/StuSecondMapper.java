@@ -1,11 +1,11 @@
-package com.example.mapper;
+package com.example.mapper.second;
 
 import com.example.model.Stu;
 import com.example.model.StuExample;
 
 import java.util.List;
 
-public interface StuMapper {
+public interface StuSecondMapper {
 
     long countByExample(StuExample example);
 

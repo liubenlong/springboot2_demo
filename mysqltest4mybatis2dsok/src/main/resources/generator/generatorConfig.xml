@@ -2,6 +2,8 @@
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--注意：由于使用了多数据源，并且将不同数据源分包隔离，所以这里生成了mapper以后要手动移动一下。
+或者对该插件做一下修改，使其支持多数据源自动以目录-->
 <generatorConfiguration>
     <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
     <classPathEntry location="D:/localRepository/mysql/mysql-connector-java/8.0.13/mysql-connector-java-8.0.13.jar"/>
