@@ -29,7 +29,7 @@ public class StuService {
         log.info(save1.toString());
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void createOneStu() {
         Stu stu = Stu.builder().age(50).address("22").name("马云").build();
         stuRepository.save(stu);

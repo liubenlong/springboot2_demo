@@ -78,6 +78,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         beanDefinition.setBeanClass(DynamicDataSource.class);
         beanDefinition.setSynthetic(true);
         MutablePropertyValues mpv = beanDefinition.getPropertyValues();
+        //这两个属性是AbstractRoutingDataSource中的属性，设置默认数据源和其他数据源
         mpv.addPropertyValue("defaultTargetDataSource", defaultDataSource);
         mpv.addPropertyValue("targetDataSources", targetDataSources);
         //注册 - BeanDefinitionRegistry

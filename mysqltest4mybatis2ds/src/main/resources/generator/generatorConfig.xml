@@ -15,7 +15,7 @@
 
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/test?charset=utf8mb4&amp;useSSL=false" userId="root"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/test2?charset=utf8mb4&amp;useSSL=false" userId="root"
                         password="lbl0168">
         </jdbcConnection>
 
@@ -40,7 +40,7 @@
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="stu" domainObjectName="Stu" enableCountByExample="true" enableUpdateByExample="false"
+        <table tableName="cat" domainObjectName="Cat" enableCountByExample="true" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="true"></table>
     </context>
 </generatorConfiguration>

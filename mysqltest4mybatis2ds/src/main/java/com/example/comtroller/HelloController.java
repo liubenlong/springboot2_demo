@@ -1,6 +1,8 @@
 package com.example.comtroller;
 
+import com.example.model.Cat;
 import com.example.model.Stu;
+import com.example.service.CatService;
 import com.example.service.StuService;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +13,13 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class StuController {
+public class HelloController {
 
 
     @Autowired
     private StuService stuService;
+    @Autowired
+    private CatService catService;
 
     @GetMapping("/findAll")
     public List<Stu> findAll() {
@@ -49,4 +53,16 @@ public class StuController {
         return stuService.save();
     }
 
+
+
+
+    @GetMapping("/findCats")
+    public List<Cat> findCats() {
+        return catService.findAll();
+    }
+
+    @GetMapping("/modify4multipleds")
+    public void modify4multipleds(String str) {
+        stuService.modify4multipleds(str);
+    }
 }
