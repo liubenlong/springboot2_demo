@@ -23,7 +23,7 @@
         <!--<module>helloworld</module>-->
         <!--<module>mysqltest</module>-->
         <!--<module>mysqltest4mybatis</module>-->
-        <module>mysqltest4mybatis2ds</module>
+        <module>mysqltest4mybatis2dswaring</module>
     </modules>
 
     <dependencyManagement>
