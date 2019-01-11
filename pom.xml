@@ -24,7 +24,8 @@
         <!--<module>mysqltest4jpa</module>-->
         <!--<module>mysqltest4mybatis</module>-->
         <!--<module>mysqltest4mybatis2dswaring</module>-->
-        <module>mysqltest4mybatis2dsok</module>
+        <!--<module>mysqltest4mybatis2dsok</module>-->
+        <module>mysqltest4redis</module>
     </modules>
 
     <dependencyManagement>

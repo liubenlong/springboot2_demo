@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 特别注意：java 9以后需要将com.mysql.jdbc.Driver  改为  com.mysql.cj.jdbc.Driver即可
+      # 否则报错：Loading class `com.mysql.jdbc.Driver'. This is deprecated.
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #基本属性
+      url: jdbc:mysql://127.0.0.1:3306/test?charset=utf8mb4&useSSL=false
+      username: root
+      password: lbl0168
+      #配置初始化大小/最小/最大[仅用于测试，生成环境需要修改哦]
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      #获取连接等待超时时间
+      max-wait: 60000
+      #间隔多久进行一次检测，检测需要关闭的空闲连接
+      time-between-eviction-runs-millis: 60000
+      #一个连接在池中最小生存的时间
+      min-evictable-idle-time-millis: 300000
+      #指定获取连接时连接校验的sql查询语句
+      validation-query: SELECT 'x'
+      #验证连接的有效性
+      test-while-idle: true
+      #获取连接时候验证，会影响性能（不建议true）
+      test-on-borrow: false
+      #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000 # 超时时间
+    lettuce:
+      pool:
+        max-active: 200 #连接池最大连接数（使用负值表示没有限制）
+        max-idle: 20 # 连接池中的最大空闲连接
+        min-idle: 5 #连接池中的最小空闲连接
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+
+#pagehelper
+pagehelper:
+  helperDialect: mysql
+  #  分页参数合理化，默认false禁用 .启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
+  #  用合理化时，如果pageNum<1或pageNum>pages会返回空数据
+  reasonable: true
+  supportMethodsArguments: true
+  # 设置为true时，使用RowBounds分页会进行count查询 .默认=false
+  rowBoundsWithCount: true
+
