@@ -31,6 +31,7 @@ public class MybatisSecondDbConfig {
     public SqlSessionFactory secondSqlSessionFactory(@Qualifier("ds2") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        //由于拆分了包结构，这里指定mapper
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapping/second/*.xml"));
         return bean.getObject();
     }

@@ -36,6 +36,7 @@ public class MybatisMasterDbConfig {
     public SqlSessionFactory masterSqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        //由于拆分了包结构，这里指定mapper
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapping/master/*.xml"));
         return bean.getObject();
     }
