@@ -25,7 +25,8 @@
         <!--<module>mysqltest4mybatis</module>-->
         <!--<module>mysqltest4mybatis2dswaring</module>-->
         <!--<module>mysqltest4mybatis2dsok</module>-->
-        <module>mysqltest4redis</module>
+        <!--<module>mysqltest4redis</module>-->
+        <module>mysqltest4Multipleredis</module>
     </modules>
 
     <dependencyManagement>
