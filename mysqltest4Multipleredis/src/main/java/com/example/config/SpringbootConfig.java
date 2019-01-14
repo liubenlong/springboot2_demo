@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
@@ -14,7 +15,9 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.scripting.support.ResourceScriptSource;
 
 @Configuration
 public class SpringbootConfig {
@@ -113,4 +116,17 @@ public class SpringbootConfig {
         template.setHashValueSerializer(new FastJsonRedisSerializer<>(Object.class));
         return template;
     }
+
+
+    /**
+     * lua脚本使用
+     */
+    @Bean
+    public DefaultRedisScript<String> redisScript() {
+        DefaultRedisScript<String> redisScript = new DefaultRedisScript<>();
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/test.lua")));
+        redisScript.setResultType(String.class);
+        return redisScript;
+    }
+
 }

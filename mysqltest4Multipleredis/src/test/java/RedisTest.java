@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Collections;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Application.class})// 指定启动类
@@ -24,6 +27,9 @@ public class RedisTest {
     @Autowired
     @Qualifier("redisTemplate2")
     private RedisTemplate redisTemplate2;
+
+    @Autowired
+    DefaultRedisScript<String> redisScript;
 
     @Test
     public void deleteVal() {
@@ -63,5 +69,15 @@ public class RedisTest {
         log.info("d={}", d);
         Object d1 = redisTemplate2.opsForValue().get("d");
         log.info("d={}", d1);
+    }
+
+
+    @Test
+    public void testRedis4() {
+        String key = "d";
+        redisTemplate.opsForValue().set(key, "2222");
+
+        Object d = redisTemplate.execute(redisScript, Collections.singletonList(key));
+        log.info("lua value={}", d);
     }
 }

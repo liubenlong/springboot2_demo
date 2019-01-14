@@ -40,19 +40,21 @@ public class RedisController {
     }
 
     @GetMapping("/testRedis")
-    public Stu testRedis() {
+    public void testRedis() {
         Stu stu = Stu.builder().name("张三").age(20).build();
         redisTemplate.opsForValue().set("a", stu);
-        Object a = redisTemplate.opsForValue().get("a");
-        return JSON.toJavaObject((JSONObject) a, Stu.class);
+        stu = Stu.builder().name("李四").age(30).build();
+        redisTemplate2.opsForValue().set("a", stu);
     }
 
     @GetMapping("/testRedis2")
-    public Stu testRedis2() {
-        Stu stu = Stu.builder().name("李四").age(30).build();
-        redisTemplate2.opsForValue().set("a", stu);
-        Object a = redisTemplate2.opsForValue().get("a");
-        return JSON.toJavaObject((JSONObject) a, Stu.class);
+    public void testRedis2() {
+        Object a = redisTemplate.opsForValue().get("a");
+        Stu stu = JSON.toJavaObject((JSONObject) a, Stu.class);
+        log.info(stu.toString());
+        a = redisTemplate2.opsForValue().get("a");
+        Stu stu1 = JSON.toJavaObject((JSONObject) a, Stu.class);
+        log.info(stu1.toString());
     }
 
 }
