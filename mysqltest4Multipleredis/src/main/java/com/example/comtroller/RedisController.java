@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class RedisController {
 
+    /**
+     * 不写默认使用带有@Primary的RedisTemplate
+     */
     @Autowired
     private RedisTemplate redisTemplate;
-
     @Autowired
     @Qualifier("redisTemplate2")
     private RedisTemplate redisTemplate2;

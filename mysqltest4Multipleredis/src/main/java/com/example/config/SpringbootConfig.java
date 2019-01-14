@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
@@ -22,6 +21,7 @@ public class SpringbootConfig {
 
     /**
      * 配置lettuce连接池
+     *
      * @return
      */
     @Bean
@@ -32,6 +32,7 @@ public class SpringbootConfig {
 
     /**
      * 配置第一个数据源的
+     *
      * @return
      */
     @Bean
@@ -42,6 +43,7 @@ public class SpringbootConfig {
 
     /**
      * 配置第二个数据源
+     *
      * @return
      */
     @Bean
@@ -53,6 +55,7 @@ public class SpringbootConfig {
     /**
      * 配置第一个数据源的连接工厂
      * 这里注意：需要添加@Primary 指定bean的名称，目的是为了创建两个不同名称的LettuceConnectionFactory
+     *
      * @param config
      * @param redisConfig
      * @return
@@ -74,18 +77,20 @@ public class SpringbootConfig {
      * 配置第一个数据源的RedisTemplate
      * 注意：这里指定使用名称=factory 的 RedisConnectionFactory
      * 并且标识第一个数据源是默认数据源 @Primary
+     *
      * @param factory
      * @return
      */
     @Bean("redisTemplate")
     @Primary
-    public RedisTemplate<String, String> redisTemplate(@Qualifier("factory")RedisConnectionFactory factory) {
+    public RedisTemplate<String, String> redisTemplate(@Qualifier("factory") RedisConnectionFactory factory) {
         return getStringStringRedisTemplate(factory);
     }
 
     /**
      * 配置第一个数据源的RedisTemplate
      * 注意：这里指定使用名称=factory2 的 RedisConnectionFactory
+     *
      * @param factory2
      * @return
      */
@@ -96,6 +101,7 @@ public class SpringbootConfig {
 
     /**
      * 设置序列化方式 （这一步不是必须的）
+     *
      * @param factory2
      * @return
      */
