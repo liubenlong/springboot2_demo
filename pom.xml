@@ -26,7 +26,10 @@
         <!--<module>mysqltest4mybatis2dswaring</module>-->
         <!--<module>mysqltest4mybatis2dsok</module>-->
         <!--<module>mysqltest4redis</module>-->
-        <module>mysqltest4Multipleredis</module>
+        <!--<module>mysqltest4Multipleredis</module>-->
+        <module>mysqltest4dubboApi</module>
+        <module>mysqltest4dubboService</module>
+        <module>mysqltest4dubboConsumer</module>
     </modules>
 
     <dependencyManagement>

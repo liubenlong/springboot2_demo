@@ -1,0 +1,21 @@
+
+dubbo:
+  application:
+    name: mydubboconsumer
+    id: mydubboconsumer
+  ## ProtocolConfig
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 20880
+  scan:
+    base-packages: com.example.dubbo.consumer
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  consumer:
+    validation: true
+    retries: 0
+    filter: dubboLogFilter
+
+server:
+  port: 8889
