@@ -8,6 +8,9 @@ spring:
         max-active: 200 #连接池最大连接数（使用负值表示没有限制）
         max-idle: 20 # 连接池中的最大空闲连接
         min-idle: 5 #连接池中的最小空闲连接
+        # 这里在IDEA中显示红色错误，不用管，因为org.springframework.boot.autoconfigure.data.redis.RedisProperties.Pool.setMaxWait(Duration maxWait)
+        # 方法参数是Duration，IDEA无法识别，但是会自动注入成功
+        max-wait: 2000 # 当连接池耗尽时， 抛出异常之前，连接分配被阻塞的时间，也就是连接池满后最长等待时间，负值表示无限期等待
   redis2:
     host: 127.0.0.1
     port: 6379
