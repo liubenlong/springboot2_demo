@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
-@Service
+@Service(registry = "registry1")
 @Slf4j
 public class DefaultDemoService implements DemoService {
     @Override

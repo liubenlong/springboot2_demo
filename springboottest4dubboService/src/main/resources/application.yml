@@ -11,11 +11,20 @@ dubbo:
     threads: 400
   scan:
     base-packages: com.example.dubbo.provider
-  registry:
-    address: zookeeper://127.0.0.1:2181
+
+#多注册中心
+  registries:
+    registry1:
+      address: zookeeper://127.0.0.1:2181
+    registry2:
+      address: zookeeper://127.0.0.1:2182
+      default: true
+
+#  单个注册中心
+#  registry:
+#    address: zookeeper://127.0.0.1:2181
   provider:
     validation: true
     filter: dubboLogFilter
-
 server:
   port: 8888

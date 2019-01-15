@@ -10,8 +10,18 @@ dubbo:
     port: 20880
   scan:
     base-packages: com.example.dubbo.consumer
-  registry:
-    address: zookeeper://127.0.0.1:2181
+
+
+  #多注册中心
+  registries:
+    registry1:
+      address: zookeeper://127.0.0.1:2181
+    registry2:
+      address: zookeeper://127.0.0.1:2182
+      default: true
+
+#  registry:
+#    address: zookeeper://127.0.0.1:2181
   consumer:
     validation: true
     retries: 0
