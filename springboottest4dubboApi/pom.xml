@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mysqltest4dubboApi</artifactId>
+    <artifactId>springboottest4dubboApi</artifactId>
     <packaging>jar</packaging>
-    <name>mysqltest4dubboApi</name>
+    <name>springboottest4dubboApi</name>
 
     <parent>
         <groupId>com.lbl</groupId>

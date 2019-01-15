@@ -20,19 +20,21 @@
     </properties>
 
     <modules>
-        <!--<module>helloworld</module>-->
-        <!--<module>mysqltest4jpa</module>-->
-        <!--<module>mysqltest4mybatis</module>-->
-        <!--<module>mysqltest4mybatis2dswaring</module>-->
-        <!--<module>mysqltest4mybatis2dsok</module>-->
-        <!--<module>mysqltest4redis</module>-->
-        <!--<module>mysqltest4Multipleredis</module>-->
+        <!--<module>springboothelloworld</module>-->
 
-        <!--<module>mysqltest4dubboApi</module>-->
-        <!--<module>mysqltest4dubboService</module>-->
-        <!--<module>mysqltest4dubboConsumer</module>-->
+        <!--<module>springboottest4jpa</module>-->
+        <!--<module>springboottest4mybatis</module>-->
+        <!--<module>springboottest4mybatis2dswaring</module>-->
+        <!--<module>springboottest4mybatis2dsok</module>-->
 
-        <module>mysqltest4mongodb</module>
+        <!--<module>springboottest4redis</module>-->
+        <!--<module>springboottest4Multipleredis</module>-->
+
+        <module>springboottest4dubboApi</module>
+        <module>springboottest4dubboService</module>
+        <module>springboottest4dubboConsumer</module>
+
+        <!--<module>springboottest4mongodb</module>-->
 
     </modules>
 
