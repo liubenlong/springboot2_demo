@@ -30,11 +30,13 @@
         <!--<module>springboottest4redis</module>-->
         <!--<module>springboottest4Multipleredis</module>-->
 
-        <module>springboottest4dubboApi</module>
-        <module>springboottest4dubboService</module>
-        <module>springboottest4dubboConsumer</module>
+        <!--<module>springboottest4dubboApi</module>-->
+        <!--<module>springboottest4dubboService</module>-->
+        <!--<module>springboottest4dubboConsumer</module>-->
 
         <!--<module>springboottest4mongodb</module>-->
+
+        <module>springboottest4webflux</module>
 
     </modules>
 
