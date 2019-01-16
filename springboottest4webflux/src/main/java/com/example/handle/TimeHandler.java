@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -26,8 +27,25 @@ public class TimeHandler {
                 .body(Mono.just("Now is " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())), String.class);
     }
 
+
+    /**
+     * 服务器端推送，
+     * 每秒推送当前服务器时间
+     *
+     * @param serverRequest
+     * @return
+     */
+    public Mono<ServerResponse> getTimePerSecond(ServerRequest serverRequest) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_EVENT_STREAM)
+                .body(Flux.interval(Duration.ofSeconds(1))
+                                .map(a -> "Now is " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())),
+                        String.class);
+    }
+
+
     /**
      * 模拟DB获取数据
+     *
      * @param serverRequest
      * @return
      */

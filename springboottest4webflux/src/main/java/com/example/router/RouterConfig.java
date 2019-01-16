@@ -26,6 +26,7 @@ public class RouterConfig {
     @Bean
     public RouterFunction<ServerResponse> timerRouter() {
         return RouterFunctions.route(GET("/time"), req -> timeHandler.getTime(req))
-                .andRoute(GET("/getStus"), timeHandler::getStus);
+                .andRoute(GET("/getStus"), timeHandler::getStus)
+                .andRoute(GET("/getTimePerSecond"), timeHandler::getTimePerSecond);
     }
 }
