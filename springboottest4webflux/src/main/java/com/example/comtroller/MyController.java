@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -57,5 +54,17 @@ public class MyController {
     @GetMapping(value = "/findAllPreSec", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Stu> findAllPreSec() {
         return stuRepository.findAll().delayElements(Duration.ofSeconds(1));
+    }
+
+
+    /**
+     * 接收数据流的服务端
+     * 客户端需要提供事件流
+     * @return
+     */
+    @PostMapping(path = "loadStus", consumes = MediaType.APPLICATION_STREAM_JSON_VALUE) // 指定consume数据流是application/stream+json。上面方法是produces！！！
+    public Mono<Void> loadStus(@RequestBody Flux<Stu> events) {
+        // insert返回的是保存成功的记录的Flux，但我们不需要，使用then方法表示“忽略数据元素，只返回一个完成信号”。
+        return this.stuRepository.insert(events).then();
     }
 }
