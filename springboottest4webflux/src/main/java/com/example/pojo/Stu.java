@@ -1,6 +1,7 @@
 package com.example.pojo;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,9 +14,13 @@ import java.util.Date;
 @ToString
 @Builder
 public class Stu implements Serializable {
+
+    @Id
+    private String id;
+
     private String name;
-    private int age;
-    private Date date;
-    private BigDecimal b;
-    private Duration d;
+
+    private Integer age;
+
+    private String address;
 }
