@@ -67,4 +67,11 @@ public class MyController {
         // insert返回的是保存成功的记录的Flux，但我们不需要，使用then方法表示“忽略数据元素，只返回一个完成信号”。
         return this.stuRepository.insert(events).then();
     }
+
+
+
+    @GetMapping(path = "getStusUnlimited", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)//produces生产者是一个数据流
+    public Flux<Stu> getStusUnlimited() {
+        return this.stuRepository.findBy();
+    }
 }

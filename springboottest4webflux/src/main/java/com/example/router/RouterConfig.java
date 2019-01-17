@@ -19,8 +19,9 @@ public class RouterConfig {
     /**
      * RouterFunction: 路由
      * 相当于@RequestMapping。将不同的请求路由到不同的方法服务上
-     *
+     * <p>
      * 可以存在多个router和handler。但是bean的名称需不同（这里bean的名称使用的是方法名）
+     *
      * @return
      */
     @Bean
