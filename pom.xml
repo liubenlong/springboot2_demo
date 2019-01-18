@@ -36,7 +36,8 @@
 
         <!--<module>springboottest4mongodb</module>-->
 
-        <module>springboottest4webflux</module>
+        <!--<module>springboottest4webflux</module>-->
+        <module>springboottest4webfluxredis</module>
 
     </modules>
 
