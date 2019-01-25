@@ -38,6 +38,9 @@
         <module>springboot-webflux-mongodb</module>
         <module>springboot-webflux-redis</module>
 
+
+        <module>reactor3-helloworld</module>
+
     </modules>
 
     <dependencyManagement>
