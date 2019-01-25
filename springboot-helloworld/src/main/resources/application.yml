@@ -1,0 +1,34 @@
+server:
+  port: 8084
+person:
+  lastName: zhangsan
+  age: 18
+  boss: false
+  birth: 2018/05/04 01:02:21
+  map: {k1: v1,k2: v2}
+  list:
+  - lisi
+  - good
+  dogs:
+  - dog:
+    name: aaa
+    weight: 15
+  - dog:
+    name: ccc
+    weight: 16
+  #上面是KV写法，下面是行内写法
+  stu: {name: lisi, age: 21}
+
+stu:
+  name: zhangsan
+  age: 18
+
+
+#logging:
+#  level:
+#    root: info
+#    com.example.controller: info
+#    com.example.service: warn
+#  file: d://a.log
+#  pattern:
+#    console: "%d - %msg%n"

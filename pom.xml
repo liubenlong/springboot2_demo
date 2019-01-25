@@ -20,24 +20,24 @@
     </properties>
 
     <modules>
-        <!--<module>springboothelloworld</module>-->
+        <module>springboot-helloworld</module>
 
-        <!--<module>springboottest4jpa</module>-->
-        <!--<module>springboottest4mybatis</module>-->
-        <!--<module>springboottest4mybatis2dswaring</module>-->
-        <!--<module>springboottest4mybatis2dsok</module>-->
+        <module>springboot-jpa</module>
+        <module>springboot-mybatis</module>
+        <module>springboot-mybatis-2ds-waring</module>
+        <module>springboot-mybatis-2ds-ok</module>
 
-        <!--<module>springboottest4redis</module>-->
-        <!--<module>springboottest4Multipleredis</module>-->
+        <module>springboot-redis</module>
+        <module>springboot-redis-multiple</module>
 
-        <!--<module>springboottest4dubboApi</module>-->
-        <!--<module>springboottest4dubboService</module>-->
-        <!--<module>springboottest4dubboConsumer</module>-->
+        <module>springboot-dubbo-api</module>
+        <module>springboot-dubbo-service</module>
+        <module>springboot-dubbo-consumer</module>
 
-        <!--<module>springboottest4mongodb</module>-->
+        <module>springboot-mongodb</module>
 
-        <!--<module>springboottest4webflux</module>-->
-        <module>springboottest4webfluxredis</module>
+        <module>springboot-webflux-mongodb</module>
+        <module>springboot-webflux-redis</module>
 
     </modules>
 
