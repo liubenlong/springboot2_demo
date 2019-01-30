@@ -1,6 +1,7 @@
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.reactivestreams.Subscription;
+import reactor.core.CoreSubscriber;
 import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 @Slf4j
 public class MyTest {
@@ -23,6 +25,49 @@ public class MyTest {
         System.out.println();
         Flux.just(1, 2, 3, 4, 5, 6).subscribe(System.out::print, System.out::println, () -> System.out.println("Completed"));
         Mono.just(100).subscribe(System.out::println);
+    }
+
+
+    @Test
+    public void test11() {
+        Flux.just(1, 2, 3, 4, 5)
+                .subscribe(new CoreSubscriber<>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        log.info("onSubscribe, {}", s.getClass());
+                        s.request(5);
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        log.info("onNext： {}", integer);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        log.info("onComplete");
+                    }
+                });
+    }
+
+    @Test
+    public void test12() {
+        /**
+         * lambda表达式测试
+         */
+        Function<Integer, Integer> mapper = i -> i * i;
+        Integer result = mapper.apply(2);
+        System.out.println(result);
+
+        //自定义lambda
+        MyLambda myLambda = (a, b) -> a + b;
+        result = myLambda.add(2, 3);
+        System.out.println(result);
     }
 
     @Test
@@ -201,8 +246,10 @@ public class MyTest {
                 .map(i -> 10 / (i - 3)) // 1
                 .map(i -> i * i);
     }
+
     /**
      * 捕获，并再包装为某一个业务相关的异常，然后再抛出业务异常
+     *
      * @throws InterruptedException
      */
     @Test
@@ -217,7 +264,7 @@ public class MyTest {
 
     /**
      * 捕获，记录错误日志，然后继续抛出
-     *
+     * <p>
      * doOnXxx是只读的，对数据流不会造成影响
      */
     @Test
@@ -241,7 +288,7 @@ public class MyTest {
                 .doFinally(type -> {//doFinally在序列终止（无论是 onComplete、onError还是取消）的时候被执行
                     if (type == SignalType.CANCEL)  // 2
                         log.info("SignalType.CANCEL");
-                    else if(type == SignalType.ON_ERROR)
+                    else if (type == SignalType.ON_ERROR)
                         log.info("SignalType.ON_ERROR");
                 })
                 .take(1)//能够在发出N个元素后取消流。
