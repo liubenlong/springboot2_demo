@@ -29,8 +29,9 @@ public class MyTest {
 
 
     @Test
-    public void test11() {
+    public void test13() {
         Flux.just(1, 2, 3, 4, 5)
+                .map(i -> i * i)
                 .subscribe(new CoreSubscriber<>() {
                     @Override
                     public void onSubscribe(Subscription s) {
