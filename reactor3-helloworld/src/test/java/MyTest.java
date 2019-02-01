@@ -33,20 +33,22 @@ public class MyTest {
         Flux.just(1, 2, 3, 4, 5)
                 .map(i -> i * i)
                 .subscribe(new CoreSubscriber<>() {
+                    Subscription subscription;
                     @Override
                     public void onSubscribe(Subscription s) {
                         log.info("onSubscribe, {}", s.getClass());
-                        s.request(5);
+                        subscription = s;
+                        s.request(1);
                     }
 
                     @Override
                     public void onNext(Integer integer) {
                         log.info("onNext： {}", integer);
+                        subscription.request(1);
                     }
 
                     @Override
                     public void onError(Throwable t) {
-
                     }
 
                     @Override
