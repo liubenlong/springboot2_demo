@@ -41,6 +41,9 @@
 
         <module>reactor3-helloworld</module>
 
+        <module>jdk-source-code-analysis</module>
+        <module>leecode-algorithm</module>
+
     </modules>
 
     <dependencyManagement>
