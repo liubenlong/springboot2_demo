@@ -28,7 +28,6 @@ public class FreemarkerService {
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateUpdateDelayMilliseconds(0);//设置在检查是否存在比缓存模板更新版本的模板“文件”之前必须经过的时间（以毫秒为单位）。 默认为5000毫秒。
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-//        cfg.setLogTemplateExceptions(false);
     }
 
     public String process(String tempName, Map conditions) {
