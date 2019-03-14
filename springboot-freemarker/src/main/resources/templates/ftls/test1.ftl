@@ -1,0 +1,1 @@
+Hello ${name} from resource freemark! age=${age}

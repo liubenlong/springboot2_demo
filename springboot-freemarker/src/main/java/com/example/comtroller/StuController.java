@@ -1,14 +1,18 @@
 package com.example.comtroller;
 
 import com.example.pojo.SysUser;
+import com.example.service.FreemarkerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -18,10 +22,14 @@ import java.util.List;
 @Slf4j
 public class StuController {
 
+    @Autowired
+    private FreemarkerService freemarkerService;
+
     @RequestMapping(value = "/")
     public String index() {
         return "index";
     }
+
 
     @RequestMapping(value = "/welcome")
     public String hello1(Model m){
@@ -49,5 +57,17 @@ public class StuController {
         m.addAttribute("sysUser", "SysUser");
         return "sysUser/users";
     }
+
+    @RequestMapping("test1")
+    @ResponseBody
+    public String test1(){
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("name","张三");
+        map.put("age",20);
+        String s = freemarkerService.process("test1.ftl", map);
+        log.info(s);
+        return s;
+    }
+
 
 }
