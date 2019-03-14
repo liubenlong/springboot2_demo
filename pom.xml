@@ -35,6 +35,8 @@
 
         <module>springboot-mongodb</module>
 
+        <module>springboot-freemarker</module>
+
         <module>springboot-webflux-mongodb</module>
         <module>springboot-webflux-redis</module>
 

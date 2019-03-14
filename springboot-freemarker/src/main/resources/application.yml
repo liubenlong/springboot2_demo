@@ -1,0 +1,17 @@
+server:
+  port: 8095
+spring:
+  freemarker:
+    template-loader-path: ["classpath:/templates/"] # 设置ftl文件路径
+    cache: false  # 设置页面缓存
+    charset: UTF-8 # 设置页面编码格式
+    check-template-location: true
+    content-type: text/html # 设置文档类型
+    expose-request-attributes: false
+    expose-session-attributes: false
+    request-context-attribute: request #可以让Freemarker获取项目根路经
+    suffix: .ftl # 设置模板后缀名
+
+  # 设置静态文件路径，js,css等
+  mvc:
+    static-path-pattern: /static/**
