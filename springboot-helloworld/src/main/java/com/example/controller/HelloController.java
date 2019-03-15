@@ -22,6 +22,11 @@ public class HelloController {
 
     @GetMapping("/properties1")
     public String properties1() {
+        String s = new String();
+        boolean s1 = s.equals("s");
+
+        System.out.println(s.getClass().toString()+s1);
+
         log.debug("com.example.controller.HelloController.properties1 执行");
         log.info("stu={}", stu);
         log.info("person={}", person);
@@ -40,4 +45,11 @@ public class HelloController {
         return helloService.getVal();
     }
 
-}
+    public static void main(String[] args) {
+
+        String s = new String();
+        boolean s1 = s.equals("s");
+
+        System.out.println(s.getClass().toString()+s1);
+    }
+    }
