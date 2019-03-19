@@ -75,7 +75,7 @@ public class StuController {
         map.put("dateTime", new Date());
 
         List<SysUser> users = new ArrayList<>();
-        users.add(new SysUser(1, "ITDragon 博客", "111"));
+        users.add(new SysUser(1, "liubenlong007", "111"));
         users.add(new SysUser(2, "欢迎", "13333333333"));
         users.add(new SysUser(3, "You！", null));
         map.put("users", users);
