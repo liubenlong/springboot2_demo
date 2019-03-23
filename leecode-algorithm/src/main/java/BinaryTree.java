@@ -176,7 +176,7 @@ public class BinaryTree {
         System.out.println();
         levelOrder(tree.getRoot());
 
-        System.out.println("\ndeep="+deep(tree.getRoot()));
+        System.out.println("\ndeep=" + deep(tree.getRoot()));
     }
 
 }

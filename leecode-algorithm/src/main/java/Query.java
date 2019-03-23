@@ -23,11 +23,11 @@ public class Query {
      * @param nums
      */
     public static int query1(int[] nums, int begin, int end, int target) {
-        if(end<begin)return -1;
+        if (end < begin) return -1;
         int middle = (begin + end) / 2;
-        if(nums[middle] == target) return middle;
-        else if(nums[middle]>target) return query1(nums, 0, middle - 1, target);
-        else return query1(nums, middle+1, end, target);
+        if (nums[middle] == target) return middle;
+        else if (nums[middle] > target) return query1(nums, 0, middle - 1, target);
+        else return query1(nums, middle + 1, end, target);
     }
 
     public static void main(String[] args) {
