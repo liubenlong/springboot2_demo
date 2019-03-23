@@ -266,19 +266,60 @@ public class Sort {
 
 
     /**
-     * 堆排序
+     * 堆排序算法
      *
-     * @param nums
+     * @param array
      */
-    public static void sort8(int[] nums) {
+    public static void heapSort(int[] array) {
+        if (array == null || array.length == 0) return;
 
+        buildMaxHeap(array);//先构造一次大顶堆
+
+        //升序排序：逐个取最大值移动到末尾
+        for (int i = 0; i < array.length - 1; i++) {
+            switchNode(array, 0, array.length - 1 - i);
+            maxHeap(array, 0, array.length - 1 - i);
+        }
+
+    }
+
+    /**
+     * 构建大顶堆
+     *
+     * @param array
+     */
+    private static void buildMaxHeap(int[] array) {
+        int half = array.length / 2;
+        for (int i = half; i >= 0; i--) {
+            maxHeap(array, i, array.length);
+        }
+    }
+
+    private static void maxHeap(int[] array, int parentIndex, int arrayLength) {
+        int left = parentIndex * 2 + 1;
+        int right = parentIndex * 2 + 2;
+
+        if (left < arrayLength && array[left] > array[parentIndex]) {
+            switchNode(array, left, parentIndex);
+            maxHeap(array, left, arrayLength);
+        }
+        if (right < arrayLength && array[right] > array[parentIndex]) {
+            switchNode(array, right, parentIndex);
+            maxHeap(array, right, arrayLength);
+        }
+    }
+
+    private static void switchNode(int[] array, int a, int b) {
+        int temp = array[a];
+        array[a] = array[b];
+        array[b] = temp;
     }
 
     @Test
     public void test8() {
-        int[] nums = {4, 3, 5, 2, 1, 6, 0, 11, 66, 33, 22, 34, 66, 98, 12, 45, 23, 34, 32};
-        sort8(nums);
-        System.out.println(Arrays.toString(nums));
+        int[] array = {4, 3, 5, 2, 1, 6, 0, 11, 66, 33, 22, 34, 66, 98, 12, 45, 23, 34, 32};
+        heapSort(array);
+        System.out.println(Arrays.toString(array));
     }
 
 
