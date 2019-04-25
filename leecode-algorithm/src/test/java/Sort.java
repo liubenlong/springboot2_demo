@@ -317,7 +317,7 @@ public class Sort {
 
     @Test
     public void test8() {
-        int[] array = {4, 3, 5, 2, 1, 6, 0, 11, 66, 33, 22, 34, 66, 98, 12, 45, 23, 34, 32};
+        int[] array = {4, 3, 5, 2, 1, 6, 0, 11};
         heapSort(array);
         System.out.println(Arrays.toString(array));
     }
