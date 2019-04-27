@@ -276,9 +276,9 @@ public class Sort {
         buildMaxHeap(array);//先构造一次大顶堆
 
         //升序排序：逐个取最大值移动到末尾
-        for (int i = 0; i < array.length - 1; i++) {
-            switchNode(array, 0, array.length - 1 - i);
-            maxHeap(array, 0, array.length - 1 - i);
+        for (int i = array.length - 1; i > 0; i--) {
+            switchNode(array, 0, i);
+            maxHeap(array, 0, i);
         }
 
     }
