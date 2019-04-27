@@ -323,4 +323,75 @@ public class Sort {
     }
 
 
+    /**
+     * 归并排序
+     *
+     * @param a
+     * @param left
+     * @param right
+     */
+    private static void guibingSort(int[] a, int left, int right) {
+        if(left>=right)
+            return;
+
+        int mid = (left + right) / 2;
+        //二路归并排序里面有两个Sort，多路归并排序里面写多个Sort就可以了
+        guibingSort(a, left, mid);
+        guibingSort(a, mid + 1, right);
+        merge(a, left, mid, right);
+    }
+
+    private static void merge(int[] a, int left, int mid, int right) {
+
+        int[] tmp = new int[a.length];
+        int r1 = mid + 1;
+        int tIndex = left;
+        int cIndex=left;
+        // 逐个归并
+        while(left <=mid && r1 <= right) {
+            if (a[left] <= a[r1])
+                tmp[tIndex++] = a[left++];
+            else
+                tmp[tIndex++] = a[r1++];
+        }
+        // 将左边剩余的归并
+        while (left <=mid) {
+            tmp[tIndex++] = a[left++];
+        }
+        // 将右边剩余的归并
+        while ( r1 <= right ) {
+            tmp[tIndex++] = a[r1++];
+        }
+
+
+
+
+        System.out.println("第"+(++number)+"趟排序:\t");
+        // TODO Auto-generated method stub
+        //从临时数组拷贝到原数组
+        while(cIndex<=right){
+            a[cIndex]=tmp[cIndex];
+            //输出中间归并排序结果
+            System.out.print(a[cIndex]+"\t");
+            cIndex++;
+        }
+        System.out.println();
+    }
+
+
+
+
+    static int number=0;
+
+
+    @Test
+    public void test9() {
+        int[] nums = {14,12,15,13,11,16,4};
+        guibingSort(nums, 0, nums.length-1);
+        System.out.println(Arrays.toString(nums));
+    }
+
+
+
+
 }
