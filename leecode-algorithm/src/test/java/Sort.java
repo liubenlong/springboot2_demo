@@ -251,15 +251,15 @@ public class Sort {
             }
             nums[end] = nums[begin];
         }
-        nums[begin] = base;
+        nums[begin] = base;//运行到这里，begin=end
 
         sort7(nums, begin + 1, endTemp);
-        sort7(nums, beginTemp, end - 1);
+        sort7(nums, beginTemp, begin - 1);
     }
 
     @Test
     public void test7() {
-        int[] nums = {4, 3, 5, 2, 1, 6, 0, 11, 66, 33, 22, 98, 12, 45, 23, 34, 32};
+        int[] nums = {4, 3, 5, 2, 1, 6, 0, 11};
         sort7(nums, 0, nums.length - 1);
         System.out.println(Arrays.toString(nums));
     }

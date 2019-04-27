@@ -1,3 +1,4 @@
+import lombok.Data;
 import org.junit.Test;
 
 import java.util.*;
@@ -43,5 +44,77 @@ public class 算法 {
         for (Integer[] integers : list) {
             System.out.println(Arrays.toString(integers));
         }
+    }
+
+
+
+
+
+    @Data
+    class Node{
+        private Node left;
+        private Node right;
+        private int data;
+
+        public Node(int data){
+           this.data=data;
+        }
+    }
+
+    /**
+     * 二叉搜索树中（没有重复值时） 查找比target大的最小值
+     * @param node
+     * @param target
+     */
+
+    public Integer find1(Node node, int target){
+        if(node == null)return null;
+        if(node.data <= target){
+           return find1(node.right, target);
+        } else {
+            Integer x= find1(node.left, target);
+            return (x == null) ? node.data : x;
+        }
+    }
+
+    /**
+     * 二叉搜索树中（没有重复值时） 查找比target小的最大值
+     * @param node
+     * @param target
+     */
+
+    public Integer find2(Node node, int target){
+        if(node == null)return null;
+        if(node.data >= target){
+            return find2(node.left, target);
+        } else {
+            Integer x= find2(node.right, target);
+            return (x == null) ? node.data : x;
+        }
+    }
+
+    @Test
+    public void findtest(){
+        Node node10 = new Node(10);//root
+        Node node5 = new Node(5);
+        node10.left=node5;
+        Node node18 = new Node(18);
+        node10.right=node18;
+        Node node1 = new Node(1);
+        Node node6 = new Node(6);
+        Node node17 = new Node(17);
+        Node node19 = new Node(19);
+        Node node7 = new Node(7);
+        Node node16 = new Node(16);
+        node5.left=node1;
+        node5.right=node6;
+        node6.right=node7;
+        node18.left=node17;
+        node18.right=node19;
+        node17.left=node16;
+
+        int target = 19;
+        System.out.println("比 " + target + "大的最小值是：" + find1(node10, target));
+        System.out.println("比 " + target + "小的最大值是：" + find2(node10, target));
     }
 }
