@@ -1,0 +1,6 @@
+server:
+  port: 8090
+hbase:
+  config:
+    hbase.zookeeper.quorum: node1,node2,node3
+    hbase.zookeeper.property.clientPort: 2181
