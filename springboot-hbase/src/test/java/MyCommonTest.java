@@ -16,7 +16,7 @@ public class MyCommonTest  {
 
 
     @Test
-    public void test2() throws URISyntaxException, IOException {
+    public void test() throws URISyntaxException, IOException {
         // 加载HBase的配置
         Configuration configuration = HBaseConfiguration.create();
 
