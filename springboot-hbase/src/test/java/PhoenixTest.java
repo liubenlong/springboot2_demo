@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PhoenixPool {
+public class PhoenixTest {
 
     static Connection conn = null;
     static ResultSet rs = null;
