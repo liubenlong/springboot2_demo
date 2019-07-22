@@ -52,6 +52,12 @@
             <artifactId>hbase-client</artifactId>
             <version>2.1.5</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.phoenix/phoenix-core -->
+        <dependency>
+            <groupId>org.apache.phoenix</groupId>
+            <artifactId>phoenix-core</artifactId>
+            <version>5.0.0-HBase-2.0</version>
+        </dependency>
 
 
         <dependency>
