@@ -1,5 +1,6 @@
 import lombok.extern.slf4j.Slf4j;
-import org.apache.flink.streaming.api.functions.sink.SinkFunction;
+import org.apache.flink.streaming.api.functions.ProcessFunction;
+import org.apache.flink.util.Collector;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -11,11 +12,14 @@ import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
 @Slf4j
-public class HbaseSink implements SinkFunction<String> {
+public class HbaseProcess extends ProcessFunction<String, String> {
+    private static final long serialVersionUID = 1L;
+
+    private Connection connection = null;
+    private Table table = null;
+
     @Override
-    public void invoke(String value, Context context) throws Exception {
-        Connection connection = null;
-        Table table = null;
+    public void open(org.apache.flink.configuration.Configuration parameters) throws Exception {
         try {
             // 加载HBase的配置
             Configuration configuration = HBaseConfiguration.create();
@@ -30,6 +34,24 @@ public class HbaseSink implements SinkFunction<String> {
             // 获取表对象
             table = connection.getTable(tableName);
 
+            log.info("[HbaseSink] : open HbaseSink finished");
+        } catch (Exception e) {
+            log.error("[HbaseSink] : open HbaseSink faild {}", e);
+        }
+    }
+
+    @Override
+    public void close() throws Exception {
+        log.info("close...");
+        if (null != table) table.close();
+        if (null != connection) connection.close();
+    }
+
+    @Override
+    public void processElement(String value, Context ctx, Collector<String> out) throws Exception {
+        try {
+            log.info("[HbaseSink] value={}", value);
+
             //row1:cf:a:aaa
             String[] split = value.split(":");
 
@@ -40,10 +62,9 @@ public class HbaseSink implements SinkFunction<String> {
             log.error("[HbaseSink] : put value:{} to hbase", value);
         } catch (Exception e) {
             log.error("", e);
-        } finally {
-            if (null != table) table.close();
-            if (null != connection) connection.close();
         }
+
     }
+
 
 }
