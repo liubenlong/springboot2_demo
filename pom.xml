@@ -26,6 +26,8 @@
         <module>springboot-mybatis-2ds-waring</module>
         <module>springboot-mybatis-2ds-ok</module>
 
+        <module>springboot-kafka</module>
+
         <module>springboot-redis</module>
         <module>springboot-redis-multiple</module>
 
