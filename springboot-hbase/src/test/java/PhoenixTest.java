@@ -13,14 +13,6 @@ public class PhoenixTest {
     static Connection conn = null;
     static ResultSet rs = null;
 
-    static {
-        try {
-            Class.forName("org.apache.phoenix.jdbc.PhoenixDriver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * 创建一个新的链接不是一个昂贵的操作，所以这里就不使用连接池了。
      * @return
@@ -28,8 +20,7 @@ public class PhoenixTest {
     @Before
     public void getConnection() {
         try {
-            // jdbc 的 url 类似为 jdbc:phoenix [ :<zookeeper quorum> [ :<port number> ] [ :<root node> ] ]，
-            conn = DriverManager.getConnection("jdbc:phoenix:node1,node2,node3:2181");
+            conn = DriverManager.getConnection("jdbc:phoenix:172.16.50.41,172.16.50.42,172.16.50.43");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,7 +32,7 @@ public class PhoenixTest {
             String createSql = "CREATE TABLE user (id varchar PRIMARY KEY,name varchar ,passwd varchar)";
             PreparedStatement ps = conn.prepareStatement(createSql);
             ps.execute();
-            ps.closeOnCompletion();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
