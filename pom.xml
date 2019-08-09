@@ -50,6 +50,7 @@
 
 
         <module>springboot-hbase</module>
+        <module>springboot-hbase-113</module>
 
     </modules>
 

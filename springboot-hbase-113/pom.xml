@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>springboot-hbase</artifactId>
+    <artifactId>springboot-hbase-113</artifactId>
     <packaging>jar</packaging>
-    <name>springboot-hbase</name>
+    <name>springboot-hbase-113</name>
 
     <parent>
         <groupId>com.lbl</groupId>
@@ -21,43 +21,37 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.data</groupId>-->
-        <!--            <artifactId>spring-data-hadoop-boot</artifactId>-->
-        <!--            <version>2.5.0.RELEASE</version>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>javax.servlet</groupId>-->
-        <!--                    <artifactId>servlet-api</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.hbase</groupId>-->
+<!--            <artifactId>hbase-client</artifactId>-->
+<!--            <version>2.1.5</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.phoenix</groupId>-->
+<!--            <artifactId>phoenix-core</artifactId>-->
+<!--            <version>5.0.0-HBase-2.0</version>-->
+<!--        </dependency>-->
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.data</groupId>-->
-        <!--            <artifactId>spring-data-hadoop</artifactId>-->
-        <!--            <version>2.5.0.RELEASE</version>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>javax.servlet</groupId>-->
-        <!--                    <artifactId>servlet-api</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
-
-        <!--        注意spring-data-hadoop已经停止维护，最高是2.5版本，与hbase-client2.1不兼容-->
-        <!--        https://it007.blog.csdn.net/article/details/96475289-->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
-            <version>2.1.5</version>
+            <version>1.1.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.phoenix</groupId>
             <artifactId>phoenix-core</artifactId>
-            <version>5.0.1-HBase-2.1.5</version>
+            <version>4.7.0-HBase-1.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.10</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.flink</groupId>

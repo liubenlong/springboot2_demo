@@ -23,9 +23,10 @@ public class PhoenixTest {
     public void getConnection() {
         try {
             Properties props = new Properties();
-            props.setProperty(PhoenixRuntime.CURRENT_SCN_ATTRIB, Long.toString(1565158581910L));
+            props.setProperty(PhoenixRuntime.CURRENT_SCN_ATTRIB, Long.toString(1565249127300L));
 
-            conn = DriverManager.getConnection("jdbc:phoenix:172.16.50.41,172.16.50.42,172.16.50.43", props);
+            conn = DriverManager.getConnection("jdbc:phoenix:172.16.48.191", props);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,17 +43,27 @@ public class PhoenixTest {
             e.printStackTrace();
         }
     }
-
+    @Test
+    public void upsert11() {
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("upsert into user(id, name, passwd) values('3', '33', '33')");
+            conn.commit();
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void  upsert() {
         try {
-            String upsertSql = "upsert into PERSON4 (id,name, AGE, SEX, val) values (8,'zhangsan' ,10, 18, 1.8)";
-//            String[] param = {"2", "李四", "22", "1"};
+            String upsertSql = "upsert into user(id, name, passwd) values(?, ?, ?)";
+            String[] param = {"3", "李四", "111111"};
             PreparedStatement ps = conn.prepareStatement(upsertSql);
-//            for (int i = 1; i <= param.length; i++) {
-//                ps.setString(i, param[i - 1]);
-//            }
+            for (int i = 1; i <= param.length; i++) {
+                ps.setString(i, param[i - 1]);
+            }
             ps.executeUpdate();
             conn.commit(); // you must commit
             ps.close();

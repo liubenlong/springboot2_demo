@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>dfs.nameservices</name>
+        <value>stanlee-hive</value>
+    </property>
+    <property>
+        <name>dfs.nameservice.id</name>
+        <value>stanlee-hive</value>
+    </property>
+    <property>
+        <name>dfs.ha.namenodes.stanlee-hive</name>
+        <value>nn0,nn1</value>
+    </property>
+    <property>
+        <name>dfs.namenode.rpc-address.stanlee-hive.nn0</name>
+        <value>172.16.48.195:9000</value>
+    </property>
+    <property>
+        <name>dfs.namenode.rpc-address.stanlee-hive.nn1</name>
+        <value>172.16.48.192:9000</value>
+    </property>
+    <property>
+        <name>dfs.namenode.http-address.stanlee-hive.nn0</name>
+        <value>172.16.48.195:50070</value>
+    </property>
+    <property>
+        <name>dfs.namenode.http-address.stanlee-hive.nn1</name>
+        <value>172.16.48.192:50070</value>
+    </property>
+    <property>
+        <name>dfs.namenode.shared.edits.dir</name>
+        <value>qjournal://172.16.48.195;172.16.48.192;172.16.48.193/stanlee-hive</value>
+    </property>
+    <property>
+        <name>dfs.client.failover.proxy.provider.stanlee-hive</name>
+        <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+    </property>
+    <property>
+        <name>dfs.journalnode.edits.dir</name>
+        <value>/data/program/hadoop/journal/node/local/data</value>
+    </property>
+    <property>
+        <name>dfs.ha.automatic-failover.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.ha.fencing.methods</name>
+        <value>sshfence</value>
+    </property>
+    <property>
+        <name>dfs.ha.fencing.ssh.private-key-files</name>
+        <value>/home/appweb/.ssh/id_rsa</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/data/program/hadoopDir/name1,/data/program/hadoopDir/name2,/data/program/hadoopDir/name3</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/data/program/hadoopDir/data</value>
+    </property>
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>ipc.server.read.threadpool.size</name>
+        <value>3</value>
+        <!-- default value is 1 -->
+    </property>
+    <property>
+        <name>dfs.namenode.service.handler.count</name>
+        <value>30</value>
+        <!-- default value is 10 -->
+    </property>
+    <property>
+        <name>dfs.namenode.handler.count</name>
+        <value>80</value>
+        <!-- default value is 10 -->
+    </property>
+    <property>
+        <name>dfs.datanode.handler.count</name>
+        <value>50</value>
+        <!-- default value is 10 -->
+    </property>
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.support.append</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.support.broken.append</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.client.use.datanode.hostname</name>
+        <value>false</value>
+        <description>Whether clients should use datanode hostnames when
+            connecting to datanodes.
+        </description>
+    </property>
+    <property>
+        <name>dfs.datanode.use.datanode.hostname</name>
+        <value>false</value>
+        <description>Whether datanodes should use datanode hostnames when
+            connecting to other datanodes for data transfer.
+        </description>
+    </property>
+    <property>
+        <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>dfs.hosts</name>
+        <value>include</value>
+    </property>
+    <property>
+        <name>dfs.hosts.exclude</name>
+        <value>exclude</value>
+    </property>
+    <property>
+        <name>dfs.datanode.max.transfer.threads</name>
+        <value>8192</value>
+        <description>replacement of dfs.datanode.max.xcievers, default is 4096.</description>
+    </property>
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>false</value>
+    </property>
+</configuration>
+
