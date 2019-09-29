@@ -113,7 +113,7 @@ public class DSTest {
 
         OkHttpClient httpClient = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json;charset=UTF-8");
-        String post = "{\"ticket\": \"fbaa3a2a17afba65170f6939ac726af4daece82997c4fbd6c41cf01e1239ca17\",\"tableName\": \"GROWTH.OVERTIME_PROFILE\",\"rows\": [{\"rowKey\": \"9#hist@445#20190925060000#29#192728716\",\"data\": {\"0\": {\"SR#704#0\": \"{\\\"Delivered\\\":{\\\"succed\\\":true,\\\"time\\\":1569369806721}}\"}}}]}";
+        String post = "{\"ticket\": \"fbaa3a2a17afba65170f6939ac726af4daece82997c4fbd6c41cf01e1239ca17\",\"tableName\": \"GROWTH.REALTIME_PROFILE\",\"rows\": [{\"rowKey\": \"9#hist@445#20190925060000#29#192728715\",\"data\": {\"0\": {\"SR#704#0\": \"{\\\"Delivered\\\":{\\\"succed\\\":true,\\\"time\\\":1569369806721}}\"}}}]}";
         RequestBody requestBody = RequestBody.create(mediaType, post);
         Request request = new Request.Builder()
                 .post(requestBody)

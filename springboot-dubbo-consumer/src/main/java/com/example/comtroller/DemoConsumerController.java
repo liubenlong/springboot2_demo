@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.example.dubbo.provider.Demo1Service;
 import com.example.dubbo.provider.DemoService;
 import com.example.dubbo.provider.model.Stu;
+import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public class DemoConsumerController {
 
     @RequestMapping("/test")
     public Map<String, String> sayHello(@RequestParam String name) {
-        return Map.of("demo1Serviceresult", demo1Service.sayHello3(name), "demoServiceresult", demoService.sayHello(name));
+        return ImmutableMap.of("demo1Serviceresult", demo1Service.sayHello3(name), "demoServiceresult", demoService.sayHello(name));
     }
 
     @RequestMapping("/test1")
