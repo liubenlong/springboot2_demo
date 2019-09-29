@@ -36,6 +36,7 @@ public class HbaseSink implements SinkFunction<String> {
             // 创建一个put请求，用于添加数据或者更新数据
             Put put = new Put(Bytes.toBytes(split[0]));
             put.addColumn(Bytes.toBytes(split[1]), Bytes.toBytes(split[2]), Bytes.toBytes(split[3]));
+//            put.setTimestamp();
             table.put(put);
             log.error("[HbaseSink] : put value:{} to hbase", value);
         } catch (Exception e) {

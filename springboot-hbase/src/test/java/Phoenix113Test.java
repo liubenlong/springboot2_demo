@@ -1,7 +1,5 @@
 import com.alibaba.fastjson.JSON;
 import org.apache.phoenix.jdbc.PhoenixDriver;
-import org.apache.phoenix.query.QueryServices;
-import org.apache.phoenix.util.PhoenixRuntime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +10,11 @@ import java.util.List;
 import java.util.Properties;
 
 
-public class PhoenixTest {
+public class Phoenix113Test {
 
     static Connection conn = null;
     static ResultSet rs = null;
+
 
     /**
      * 创建一个新的链接不是一个昂贵的操作，所以这里就不使用连接池了。
@@ -25,11 +24,8 @@ public class PhoenixTest {
     public void getConnection() {
         try {
             Properties props = new Properties();
-            props.put(QueryServices.DEFAULT_COLUMN_ENCODED_BYTES_ATRRIB, "0");
-            props.setProperty(PhoenixRuntime.CURRENT_SCN_ATTRIB, Long.toString(1565158581910L));
-            props.setProperty(QueryServices.IS_NAMESPACE_MAPPING_ENABLED, "true");//命名空间映射
-            props.setProperty(QueryServices.IS_SYSTEM_TABLE_MAPPED_TO_NAMESPACE, "true");
-            conn = DriverManager.getConnection("jdbc:phoenix:172.16.50.41,172.16.50.42,172.16.50.43:2181:/hbase;RequestMetric=true", props);
+            PhoenixDriver phoenixDriver = new PhoenixDriver();
+            conn = phoenixDriver.connect("jdbc:phoenix:172.16.48.191", props);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,7 +34,7 @@ public class PhoenixTest {
     @Test
     public void create() {
         try {
-            String createSql = "CREATE TABLE user (pk varchar PRIMARY KEY,name varchar ,passwd varchar)";
+            String createSql = "CREATE TABLE user (id varchar PRIMARY KEY,name varchar ,passwd varchar)";
             PreparedStatement ps = conn.prepareStatement(createSql);
             ps.execute();
             ps.close();
@@ -69,7 +65,7 @@ public class PhoenixTest {
     @Test
     public void query() {
         try {
-            String sql = "select * from RAW.CELL_BASIC";
+            String sql = "select * from RAW.CELL_BASIC limit 1";
             String[] param = null;
 
             PreparedStatement ps = conn.prepareStatement(sql);
