@@ -20,7 +20,7 @@ public class FilnkCostKafka {
 //        properties.setProperty("zookeeper.connect", "172.16.52.4:2181,172.16.52.5:2181,172.16.52.6:2181");
         properties.setProperty("group.id", "test");
 
-        FlinkKafkaConsumer09<String> myConsumer = new FlinkKafkaConsumer09<String>("stanlee.dataservice.hbase113m.to.hbase215.hbase",
+        FlinkKafkaConsumer09<String> myConsumer = new FlinkKafkaConsumer09<>("stanlee.dataservice.hbase113m.to.hbase215.hbase",
                 new SimpleStringSchema(), properties);
 
         DataStream<String> stream = env.addSource(myConsumer);

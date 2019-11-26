@@ -53,6 +53,8 @@
         <module>springboot-hbase</module>
         <module>springboot-hbase-215</module>
 
+        <module>springboot-hadoop</module>
+
     </modules>
 
     <dependencyManagement>

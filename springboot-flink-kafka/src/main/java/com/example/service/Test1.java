@@ -24,7 +24,7 @@ public class Test1 {
 //        properties.setProperty("zookeeper.connect", "ip0:2181");
         properties.setProperty("group.id", "test1");
 
-        FlinkKafkaConsumerBase<String> consumer = new FlinkKafkaConsumer011<String>(
+        FlinkKafkaConsumerBase<String> consumer = new FlinkKafkaConsumer011<>(
                 "stanlee.dataservice.hbase113m.to.hbase215.hbase", new SimpleStringSchema(), properties);
         //从最早开始消费
         consumer.setStartFromEarliest();
