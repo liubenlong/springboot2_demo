@@ -31,7 +31,7 @@ public class HadoopTest {
     @Before
     public void initFS() throws URISyntaxException, IOException, InterruptedException {
         Configuration conf = new Configuration();
-        fs = FileSystem.get(new URI(hadoopConfig.getNameNode()), conf, "appweb");
+        fs = FileSystem.get(new URI(hadoopConfig.getNameNode()), conf, "root");
     }
 
     @After
@@ -46,6 +46,19 @@ public class HadoopTest {
     @Test
     public void existDir() {
         System.out.println(existDir(hadoopConfig.getNameSpace(), true));
+    }
+
+    /**
+     * 判断文件是否存在
+     */
+    @Test
+    public void existFile() throws IOException {
+        String file="hdfs://ns1/hbase/WALs/node3,16020,1574988041377/node3%2C16020%2C1574988041377.1574988058373";
+        if (fs.exists(new Path(file))){
+            System.out.println("文件存在");
+        }else{
+            System.out.println("文件不存在");
+        }
     }
 
     @Test

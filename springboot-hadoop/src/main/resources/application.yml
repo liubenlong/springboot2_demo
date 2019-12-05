@@ -2,5 +2,5 @@ server:
   port: 8090
 
 hadoop:
-  name-node: hdfs://172.16.49.96:9000
-  name-space: /zhenhun
+  name-node: hdfs://node2:9000
+  name-space: /hbase/WALs

@@ -1,5 +1,7 @@
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HRegionInfo;
+import org.apache.hadoop.hbase.ServerName;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -121,18 +123,23 @@ String a = "ADM_LOAN_ALGO:SUANFA_FRAUD_APP_T_MATCH_FEATURES\n" +
     @Test
     public void test4() throws IOException, InterruptedException {
         Configuration conf = HBaseConfiguration.create();
-        conf.set("hbase.zookeeper.quorum", "192.168.229.105");
+        conf.set("hbase.zookeeper.quorum", "node1");
         conf.set("hbase.zookeeper.peerport", "2181");
         conf.set("zookeeper.znode.parent", "/hbase");
         Connection connection = ConnectionFactory.createConnection(conf);
 
 
-        TableName tableName = TableName.valueOf("t1");
+        TableName tableName = TableName.valueOf("t2");
         Table table = connection.getTable(tableName);
 
-        Delete delete = new Delete(Bytes.toBytes("p"));
-        table.delete(delete);
 
+
+        Delete delete = new Delete(Bytes.toBytes("b"));
+        delete.addColumn(Bytes.toBytes("f"), Bytes.toBytes("a"), 1574945850593L);
+
+
+
+        table.delete(delete);
 
         table.close();
         connection.close();
@@ -186,5 +193,27 @@ String a = "ADM_LOAN_ALGO:SUANFA_FRAUD_APP_T_MATCH_FEATURES\n" +
 
         table.close();
         connection.close();
+    }
+
+
+    @Test
+    public void test7() throws IOException, InterruptedException {
+        Configuration config = HBaseConfiguration.create();
+        config.set("hbase.zookeeper.quorum", "172.16.49.96");
+        config.set("hbase.zookeeper.peerport", "2181");
+        config.set("zookeeper.znode.parent", "/hbase");
+        Admin admin = ConnectionFactory.createConnection(config).getAdmin();
+        List<String> phoenixTables = Arrays.asList("SYSTEM:CATALOG","SYSTEM:FUNCTION","SYSTEM:LOG","SYSTEM:MUTEX","SYSTEM:SEQUENCE", "SYSTEM:STATS");
+        TableName[] tableNames = admin.listTableNames();
+        for (TableName tableName : tableNames) {
+            if (tableName.isSystemTable() || //系统表
+                    phoenixTables.contains(tableName.getNameWithNamespaceInclAsString())) {//过滤掉Phoenix的表
+                continue;
+            }
+            List<RegionInfo> regions = admin.getRegions(tableName);
+            for (RegionInfo region : regions) {
+                System.out.println(region.getRegionNameAsString());
+            }
+        }
     }
 }
