@@ -1,7 +1,7 @@
-import com.alibaba.fastjson.JSONObject;
+package java实现LRU算法;
+
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
