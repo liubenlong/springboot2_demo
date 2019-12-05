@@ -7,6 +7,7 @@ import java.util.Map;
 
 /**
  * java实现LRU算法
+ * 参考资料：https://www.cnblogs.com/lzrabbit/p/3734850.html
  */
 public class LRUWithJava {
 
