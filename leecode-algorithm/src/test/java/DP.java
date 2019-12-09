@@ -9,19 +9,20 @@ public class DP {
 
     public static int coinChange(int[] coins, int amount) {
         int[] dp = new int[amount + 1];
-        for (int i = 1; i <= amount; i++) dp[i] = 0x7fff_fffe;
+        for (int i = 1; i <= amount; i++) dp[i] = Integer.MAX_VALUE;
 
         for (int coin : coins)
             for (int i = coin; i <= amount; i++)
                 dp[i] = Math.min(dp[i], dp[i - coin] + 1);
 
-        return dp[amount] == 0x7fff_fffe ? -1 : dp[amount];
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
 
     /**
      * coinChange
-     *
+     * <p>
      * https://blog.csdn.net/lym940928/article/details/90111598
+     * https://v.youku.com/v_show/id_XMzg0MDcyMDI0MA==.html?
      */
     @Test
     public void test1() {
