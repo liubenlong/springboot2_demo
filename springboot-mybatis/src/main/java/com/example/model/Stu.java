@@ -22,7 +22,7 @@ public class Stu {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = null==  name ? null : name.trim();
     }
 
     public Integer getAge() {
@@ -38,6 +38,6 @@ public class Stu {
     }
 
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = null==address   ? null : address.trim();
     }
 }

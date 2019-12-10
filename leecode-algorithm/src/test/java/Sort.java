@@ -271,7 +271,7 @@ public class Sort {
      * @param array
      */
     public static void heapSort(int[] array) {
-        if (array == null || array.length == 0) return;
+        if (null == array || array.length == 0) return;
 
         buildMaxHeap(array);//先构造一次大顶堆
 

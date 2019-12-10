@@ -2,13 +2,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.Test;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
 /**
- * 二叉树
+ * 二叉树 相关算法
  */
 @Data
 public class BinaryTree {
@@ -26,6 +27,10 @@ public class BinaryTree {
         private Integer data;
         private Node leftNode;
         private Node rightNode;
+
+        public Node(int data) {
+            this.data = data;
+        }
     }
 
     public void insert(Integer data) {
@@ -141,19 +146,20 @@ public class BinaryTree {
 
     /**
      * 计算深度
+     * <p>
+     * 递归
      */
     public static int deep(Node node) {
-        if (node != null) {
-            int i = deep(node.getLeftNode());
-            int j = deep(node.getRightNode());
-            return 1 + (i > j ? i : j);
-        } else {
-            return 0;
-        }
+        if (null == node) return 0;
+
+        int leftDeep = deep(node.getLeftNode());
+        int rightDeep = deep(node.getRightNode());
+        return 1 + (leftDeep > rightDeep ? leftDeep : rightDeep);
     }
 
 
-    public static void main(String[] args) {
+    @Test
+    public void test1() {
         BinaryTree tree = new BinaryTree();
         tree.insert(3);
         tree.insert(6);
@@ -182,4 +188,63 @@ public class BinaryTree {
         System.out.println("\ndeep=" + deep(tree.getRoot()));
     }
 
+
+    /**
+     * 二叉搜索树中（没有重复值时） 查找比target大的最小值
+     *
+     * @param node
+     * @param target
+     */
+    public Integer find1(Node node, int target) {
+        if (null == node) return null;
+        if (node.data <= target) {
+            return find1(node.rightNode, target);//这里目的是从根节点向下找，直到找到第一个比target大的节点。
+        } else {
+            //找到第一个比target大的节点（记为node0）后，比target大的最小值肯定在node0的左子树内。所以查找左子树，返回值为空说明左子树没有结果，则去当前节点值
+            Integer x = find1(node.leftNode, target);
+            return (null == x) ? node.data : x;
+        }
+    }
+
+    /**
+     * 二叉搜索树中（没有重复值时） 查找比target小的最大值
+     *
+     * @param node
+     * @param target
+     */
+
+    public Integer find2(Node node, int target) {
+        if (node == null) return null;
+        if (node.data >= target) {
+            return find2(node.leftNode, target);
+        } else {
+            Integer x = find2(node.rightNode, target);
+            return (x == null) ? node.data : x;
+        }
+    }
+
+    @Test
+    public void findtest() {
+        Node node10 = new Node(10);//root
+        Node node5 = new Node(5);
+        node10.leftNode = node5;
+        Node node18 = new Node(18);
+        node10.rightNode = node18;
+        Node node1 = new Node(1);
+        Node node6 = new Node(6);
+        Node node17 = new Node(17);
+        Node node19 = new Node(19);
+        Node node7 = new Node(7);
+        Node node16 = new Node(16);
+        node5.leftNode = node1;
+        node5.rightNode = node6;
+        node6.rightNode = node7;
+        node18.leftNode = node17;
+        node18.rightNode = node19;
+        node17.leftNode = node16;
+
+        int target = 10;
+        System.out.println("比 " + target + "大的最小值是：" + find1(node10, target));
+        System.out.println("比 " + target + "小的最大值是：" + find2(node10, target));
+    }
 }

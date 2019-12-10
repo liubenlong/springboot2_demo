@@ -44,7 +44,7 @@ public class MyClassLoader extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
             byte[] classDate = getDate(name);
-            if (classDate == null) {
+            if (null==classDate  ) {
             } else {
                 //defineClass方法将字节码转化为类
                 return defineClass(name, classDate, 0, classDate.length);
