@@ -3,8 +3,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 二叉树
@@ -32,7 +35,7 @@ public class BinaryTree {
     }
 
     /**
-     * 构造二叉排序树
+     * 构造二叉排序树（又叫二叉搜索树，二叉查找树）
      *
      * @param node
      * @param data
@@ -84,7 +87,7 @@ public class BinaryTree {
 
     /**
      * 先序遍历 - 非递归
-     * 思路和递归一样，只是这里将递归使用的栈显示的记录而已
+     * 思路和递归一样，只是这里将递归使用的 栈 显示的记录而已
      */
     public static void preOrderTraverse1(Node node) {
         Stack<Node> stack = new Stack<>();
@@ -93,6 +96,7 @@ public class BinaryTree {
         while (!stack.empty()) {
             Node pop = stack.pop();
             System.out.print(pop.getData() + ",");
+            //先序 是  跟左右，  所以这里先把右孩子入栈，因为栈是后入先出
             if (null != pop.getRightNode()) stack.push(pop.getRightNode());
             if (null != pop.getLeftNode()) stack.push(pop.getLeftNode());
         }
@@ -125,11 +129,11 @@ public class BinaryTree {
      * 层次遍历
      */
     public static void levelOrder(Node node) {
-        LinkedBlockingDeque<Node> deque = new LinkedBlockingDeque();
+        Queue<Node> deque = new ArrayDeque<>();
         if (node != null) deque.add(node);
 
         while (!deque.isEmpty()) {
-            Node pop = deque.pop();
+            Node pop = deque.remove();
             System.out.print(pop.getData() + ",");
             if (pop.getLeftNode() != null) deque.add(pop.getLeftNode());
             if (pop.getRightNode() != null) deque.add(pop.getRightNode());
