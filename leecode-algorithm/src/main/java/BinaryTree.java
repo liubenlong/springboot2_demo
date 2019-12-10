@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 二叉树
@@ -146,8 +144,9 @@ public class BinaryTree {
      */
     public static int deep(Node node) {
         if (node != null) {
-            int i, j;
-            return 1 + ((i = deep(node.getLeftNode())) > (j = deep(node.getRightNode())) ? i : j);
+            int i = deep(node.getLeftNode());
+            int j = deep(node.getRightNode());
+            return 1 + (i > j ? i : j);
         } else {
             return 0;
         }
