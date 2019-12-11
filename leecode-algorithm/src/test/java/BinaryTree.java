@@ -1,3 +1,4 @@
+import com.alibaba.fastjson.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -132,17 +133,65 @@ public class BinaryTree {
      * 层次遍历
      */
     public static void levelOrder(Node node) {
-        Queue<Node> deque = new ArrayDeque<>();
-        if (node != null) deque.add(node);
+        Queue<Node> queue = new ArrayDeque<>();
+        if (node != null) queue.add(node);
 
-        while (!deque.isEmpty()) {
-            Node pop = deque.remove();
+        while (!queue.isEmpty()) {
+            Node pop = queue.remove();
             System.out.print(pop.getData() + ",");
-            if (pop.getLeftNode() != null) deque.add(pop.getLeftNode());
-            if (pop.getRightNode() != null) deque.add(pop.getRightNode());
+            if (pop.getLeftNode() != null) queue.add(pop.getLeftNode());
+            if (pop.getRightNode() != null) queue.add(pop.getRightNode());
         }
     }
 
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class NodeWithLevel {
+        private Node node;
+        private int level;//层次
+
+    }
+
+    /**
+     * 侧面观察二叉树（右侧）
+     * <p>
+     * 思路：层次遍历，输出每层最后一个节点即可
+     * <p>
+     * 如何记录每层最后一个节点：通过额外的level字段记录了入队的每个node的level层次信息。每当新的一层开始时，输出上一层最后一个节点即可
+     * <p>
+     * 通过比较level的变化来确认是否是新的一层
+     */
+    public static void youce(Node node) {
+        Queue<NodeWithLevel> deque = new ArrayDeque<>();
+        NodeWithLevel preNodeWithLevel = null;//记录上一次弹出的节点，用于比较level
+
+        if (node != null) {
+            NodeWithLevel nodeWithLevel = NodeWithLevel.builder().level(1).node(node).build();
+            deque.add(nodeWithLevel);
+        }
+
+        while (!deque.isEmpty()) {
+            NodeWithLevel nodeWithLevel = deque.remove();
+
+            //上一次弹出的节点的level和这次弹出的不同，则说明是新的一层，此时preNodeWithLevel就是上一层的最后一个节点，输出即可。
+            if (null != preNodeWithLevel && nodeWithLevel.level != preNodeWithLevel.level) {
+                System.out.print(preNodeWithLevel.node.data + "   ");
+            }
+
+            preNodeWithLevel = nodeWithLevel;//记录上一次弹出的节点。每新开始一层，则打印上一层最后一个节点
+
+            if (nodeWithLevel.node.getLeftNode() != null)
+                deque.add(NodeWithLevel.builder().level(preNodeWithLevel.level + 1).node(nodeWithLevel.node.getLeftNode()).build());
+            if (nodeWithLevel.node.getRightNode() != null)
+                deque.add(NodeWithLevel.builder().level(preNodeWithLevel.level + 1).node(nodeWithLevel.node.getRightNode()).build());
+        }
+
+        if (null != preNodeWithLevel)//打印最后一个节点，因为上面不会打印最后的一个节点
+            System.out.print(preNodeWithLevel.node.data + "   ");
+    }
 
     /**
      * 计算深度
@@ -154,6 +203,22 @@ public class BinaryTree {
 
         int leftDeep = deep(node.getLeftNode());
         int rightDeep = deep(node.getRightNode());
+        return 1 + (leftDeep > rightDeep ? leftDeep : rightDeep);
+    }
+
+
+    /**
+     * 判断是否是平衡二叉树
+     */
+    public static int isBalancedBinaryTree(JSONObject jsonObject, Node node) {
+        if (null == node) return 0;
+        if (!jsonObject.getBooleanValue("isBalancedBinaryTree")) return 0;//已经判断不是了，停止计算
+
+        int leftDeep = isBalancedBinaryTree(jsonObject, node.getLeftNode());
+        int rightDeep = isBalancedBinaryTree(jsonObject, node.getRightNode());
+        if (Math.abs(leftDeep - rightDeep) > 1) {
+            jsonObject.put("isBalancedBinaryTree", false);
+        }
         return 1 + (leftDeep > rightDeep ? leftDeep : rightDeep);
     }
 
@@ -183,9 +248,24 @@ public class BinaryTree {
 
 
         System.out.println();
+        System.out.println("下面是层次遍历：");
         levelOrder(tree.getRoot());
 
-        System.out.println("\ndeep=" + deep(tree.getRoot()));
+        System.out.println();
+        System.out.println("下面是右侧遍历：");
+        youce(tree.getRoot());
+
+        System.out.println();
+        System.out.println("下面是计算深度：" + deep(tree.getRoot()));
+
+
+        /**
+         * 是否是平衡二叉树
+         */
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("isBalancedBinaryTree", true);
+        isBalancedBinaryTree(jsonObject, tree.getRoot());
+        System.out.println(jsonObject.getBooleanValue("isBalancedBinaryTree") ? "是平衡二叉树" : "不是平衡二叉树");
     }
 
 
