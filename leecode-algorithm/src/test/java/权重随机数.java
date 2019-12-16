@@ -1,4 +1,7 @@
-import java.util.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /*** 
  * java 权重随机数生成。
@@ -15,17 +18,25 @@ import java.util.*;
  *  区间概率：   0     0.5   0.8  1
  *
  */
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+class Node {
+    private double score;
+    private String name;
+}
+
 public class 权重随机数 {
 
     public static void main(String[] args) {
-        Map<Double, String> weightMapping = new HashMap<>();
-        weightMapping.put(30d, "A");
-        weightMapping.put(20D, "B");
-        weightMapping.put(50D, "C");
+        Node[] nodes = {Node.builder().name("A").score(40d).build(),
+                Node.builder().name("B").score(20d).build(),
+                Node.builder().name("C").score(40d).build()};
 
         int a = 0, b = 0, c = 0;
         for (int i = 0; i < 2000000; i++) {
-            String str = getWeightRandom(weightMapping);
+            String str = getWeightRandom(nodes);
             switch (str) {
                 case "A":
                     a++;
@@ -48,29 +59,27 @@ public class 权重随机数 {
     }
 
     /***
-     * @param weightValueMapping 权重数组
+     * @param nodes 权重数组
      */
-    public static <T> T getWeightRandom(Map<Double, T> weightValueMapping) {
-        double weightSum = weightValueMapping.keySet().stream().mapToDouble(value -> value).sum();
-        double stepWeightSum = 0;
+    public static String getWeightRandom(Node[] nodes) {
+        double weightSum = 0, stepWeightSum = 0;
+        for (Node node : nodes) {
+            weightSum += node.getScore();
+        }
 
         /*
-         这一步排序是关键。
          将权重数组按照大到小排序，那么落在某个区间的概率就是权重的概率
-         [0      50   80  100]
-          |_______|____|___|
+         [0   20     50      100]
+          |____|______|_______|
          */
-        List<Double> list = new ArrayList<>(weightValueMapping.keySet());
-        Collections.sort(list, (o1, o2) -> (int) (o2 - o1));
+        double r = Math.random();//结果0-1. 由于这里是0-1，所以权重分值的和加起来要等于100
 
-        double r = Math.random();//结果0-1
-
-        for (double weight : list) {
-            // 计算权重值  
-            stepWeightSum += weight;
+        for (int i = 0; i < nodes.length; i++) {
+            // 计算权重值
+            stepWeightSum += nodes[i].getScore();
             // 如果随机数落在了权重区间则返回索引值  
             if (r <= stepWeightSum / weightSum) {
-                return weightValueMapping.get(weight);
+                return nodes[i].getName();
             }
         }
         return null;
