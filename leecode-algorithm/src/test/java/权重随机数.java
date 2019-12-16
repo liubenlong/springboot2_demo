@@ -15,7 +15,7 @@ import java.util.*;
  *  区间概率：   0     0.5   0.8  1
  *
  */
-public class WeightRandomTest {
+public class 权重随机数 {
 
     public static void main(String[] args) {
         Map<Double, String> weightMapping = new HashMap<>();
