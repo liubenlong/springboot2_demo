@@ -13,8 +13,12 @@ public class ClassLoaderTest {
             MyClassLoader diskLoader = new MyClassLoader();
             MyClassLoader diskLoader1 = new MyClassLoader();
 
+            //依赖的类需要提前加载，不是应该自动加载的吗？
+            diskLoader.findClass("D:\\liubenlong\\a\\Dog.class", "Dog");
+            diskLoader1.findClass("D:\\liubenlong\\b\\Dog.class", "Dog");
+
             //加载class文件
-            Class clz = diskLoader.findClass("D:\\liubenlong\\a\\Hello.class");
+            Class clz = diskLoader.findClass("D:\\liubenlong\\a\\Hello.class", "Hello");
 
             Constructor constructor = clz.getConstructor(String.class);
             Object obj = constructor.newInstance("tom");
@@ -26,7 +30,7 @@ public class ClassLoaderTest {
 
 
 
-            Class clz1 = diskLoader1.findClass("D:\\liubenlong\\b\\Hello.class");
+            Class clz1 = diskLoader1.findClass("D:\\liubenlong\\b\\Hello.class", "Hello");
 
             Constructor constructor1 = clz1.getConstructor(String.class);
             Object obj1 = constructor1.newInstance("cat");

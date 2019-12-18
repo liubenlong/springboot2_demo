@@ -7,7 +7,7 @@ import java.io.FileInputStream;
  * 自定义ClassLoader
  */
 public class MyClassLoader extends ClassLoader {
-    protected Class<?> findClass(String path) {
+    protected Class<?> findClass(String path, String name) {
         try {
             FileInputStream in = new FileInputStream(path) ;
             ByteArrayOutputStream baos = new ByteArrayOutputStream() ;
@@ -18,7 +18,7 @@ public class MyClassLoader extends ClassLoader {
             }
             in.close();
             byte[] classBytes = baos.toByteArray();
-            return defineClass(classBytes , 0 , classBytes.length) ;
+            return defineClass(name,classBytes , 0 , classBytes.length) ;
         } catch (Exception e) {
             e.printStackTrace();
         }
