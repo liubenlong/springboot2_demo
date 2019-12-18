@@ -4,9 +4,53 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 public class ClassLoaderTest {
 
+
+    /**
+     * URLClassLoader
+     * 推荐此方法
+     */
+    @Test
+    public void test0() {
+        try {
+            URLClassLoader diskLoader = new URLClassLoader(new URL[]{new URL("file:/D:/liubenlong/a/")});//最后面的斜杠需要添加
+            URLClassLoader diskLoader1 = new URLClassLoader(new URL[]{new URL("file:/D:/liubenlong/b/")});
+
+            //加载class文件
+            Class clz = diskLoader.loadClass("Hello");
+            Constructor constructor = clz.getConstructor(String.class);
+            Object obj = constructor.newInstance("tom");
+
+            /**
+             * 类Hello引用了类Dog，类加载器会主动加载被引用的类。
+             * 注意一般是我们使用 URLClassLoader 实现自定义的类加载器。如果使用classLoader，则需要重写findClass方法来实现类字节码的加载
+             */
+            Method method = clz.getMethod("sayHello", null);
+            //通过反射调用Test类的say方法
+            method.invoke(obj, null);
+
+
+
+            Class clz1 = diskLoader1.loadClass("Hello");
+            Constructor constructor1 = clz1.getConstructor(String.class);
+            Object obj1 = constructor1.newInstance("cat");
+
+            Method method1 = clz1.getMethod("sayHello", null);
+            //通过反射调用Test类的say方法
+            method1.invoke(obj1, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 集成ClassLoader，重写findClass实现自定义类加载器
+     */
     @Test
     public void test1() {
         try {
@@ -14,11 +58,11 @@ public class ClassLoaderTest {
             MyClassLoader diskLoader1 = new MyClassLoader();
 
             //依赖的类需要提前加载，不是应该自动加载的吗？
-            diskLoader.findClass("D:\\liubenlong\\a\\Dog.class", "Dog");
-            diskLoader1.findClass("D:\\liubenlong\\b\\Dog.class", "Dog");
+            diskLoader.findClass("D:\\liubenlong\\a\\", "Dog");
+            diskLoader1.findClass("D:\\liubenlong\\b\\", "Dog");
 
             //加载class文件
-            Class clz = diskLoader.findClass("D:\\liubenlong\\a\\Hello.class", "Hello");
+            Class clz = diskLoader.findClass("D:\\liubenlong\\a\\", "Hello");
 
             Constructor constructor = clz.getConstructor(String.class);
             Object obj = constructor.newInstance("tom");
@@ -30,7 +74,7 @@ public class ClassLoaderTest {
 
 
 
-            Class clz1 = diskLoader1.findClass("D:\\liubenlong\\b\\Hello.class", "Hello");
+            Class clz1 = diskLoader1.findClass("D:\\liubenlong\\b\\", "Hello");
 
             Constructor constructor1 = clz1.getConstructor(String.class);
             Object obj1 = constructor1.newInstance("cat");
@@ -43,4 +87,5 @@ public class ClassLoaderTest {
             e.printStackTrace();
         }
     }
+
 }
