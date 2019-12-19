@@ -10,7 +10,7 @@ import java.util.Stack;
  * https://blog.csdn.net/asmartkiller/article/details/96431106
  *
  */
-public class Solution {
+public class 二叉树之路径之和 {
 
     class TreeNode {
         int val = 0;
@@ -61,7 +61,7 @@ public class Solution {
         t2.left = t4;
         t2.right = t5;
 
-        Solution s = new Solution();
+        二叉树之路径之和 s = new 二叉树之路径之和();
         System.out.println(s.FindPath(t1, 22));
     }
 
