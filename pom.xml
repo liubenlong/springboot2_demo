@@ -28,6 +28,7 @@
 
         <module>springboot-kafka</module>
         <module>springboot-flink-kafka</module>
+        <module>springboot-rocketmq</module>
 
         <module>springboot-redis</module>
         <module>springboot-redis-multiple</module>

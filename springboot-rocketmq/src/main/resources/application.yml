@@ -1,0 +1,7 @@
+server:
+  port: 8090
+
+rocketmq:
+  name-server: node1:9876
+  producer:
+    group: myGroupName
