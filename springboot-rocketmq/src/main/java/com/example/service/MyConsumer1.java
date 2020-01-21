@@ -5,13 +5,11 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.TimeUnit;
-
 @Slf4j
 @Service
-@RocketMQMessageListener(topic = "TopicTest", consumerGroup = "my-consumer_TopicTest")
-public class MyConsumer implements RocketMQListener<String> {
+@RocketMQMessageListener(topic = "test-topic-2", consumerGroup = "my-consumer_TopicTest2")
+public class MyConsumer1 implements RocketMQListener<String> {
     public void onMessage(String message) {
-        log.info(Thread.currentThread().getName() + " : " + message);
+        log.info("received message: " + message);
     }
 }
