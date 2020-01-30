@@ -2,7 +2,7 @@ package 字符串相关算法;
 
 import java.util.*;
 
-public class Test {
+public class 桶排序 {
 
     public static void main(String[] args) {
         System.out.println(sortMapByValue("tree"));//方法1：直接使用集合的方法对map的value进行排序
@@ -24,7 +24,6 @@ public class Test {
                 bucket[f] = new ArrayList();
             bucket[f].add(c);
         }
-
         StringBuilder str = new StringBuilder();
         for (int i = bucket.length - 1; i >= 0; i--) {
             if (bucket[i] == null)
