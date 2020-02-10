@@ -56,7 +56,7 @@ class MyCustomMessageDecoder extends ByteToMessageDecoder {
     private final static int HEAD_LENGTH = 4;
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         //
         if (in.readableBytes() < HEAD_LENGTH) {
             return;

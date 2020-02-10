@@ -66,8 +66,8 @@ class TimeWithPBClientHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
+        List<String> list = Arrays.asList(new String[]{"杭州","北京"});
         for (int i = 0; i < 100; i++) {
-            List<String> list = Arrays.asList(new String[]{"杭州","北京"});
             SubscribeReqProto.SubscribeReq.Builder req = SubscribeReqProto.SubscribeReq.newBuilder();
             req.setSubReqId(i)
                     .setUserName("TOM")
