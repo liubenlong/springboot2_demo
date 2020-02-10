@@ -53,7 +53,6 @@ public class MyNettyServerWithPB {
 }
 
 
-
 class MyChildHandlerWithPB extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel socketChannel) {
