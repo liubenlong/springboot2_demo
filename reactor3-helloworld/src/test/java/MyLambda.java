@@ -1,4 +1,4 @@
-@FunctionalInterface
-public interface MyLambda {
-    int add(int a, int b);
-}
+//@FunctionalInterface
+//public interface MyLambda {
+//    int add(int a, int b);
+//}
