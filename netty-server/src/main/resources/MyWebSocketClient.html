@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>my websocket client</title>
+</head>
+<body>
+<textarea id="msgBoxs"></textarea><br>
+待发送消息：<input type="text" id="msg">
+<input type="button" id="sendBtn" onclick="send()" value="发送">
+<script type="application/javascript">
+    var socket ;
+    if(!window.WebSocket){
+        window.WebSocket = window.MozWebSocket;
+    }
+
+    if(window.WebSocket){
+        var msgBoxs = document.getElementById("msgBoxs")
+        var msgBox = document.getElementById("msg")
+
+        socket = new WebSocket("ws://localhost:8080/websocket")
+        socket.onopen = function (evt) {
+            console.log("Connection open ...");
+            socket.send("Hello WebSocket!");
+        }
+
+        socket.onmessage = function (evt) {
+            console.log("Received Message: ", evt.data)
+            msgBoxs.innerText =  evt.data
+        }
+
+        socket.onclose = function (evt) {
+            console.log("Connect closed.");
+        }
+    }else{
+        alert("ERROR:您的浏览器不支持WebSocket！！");
+    }
+
+    function send() {
+        var msg = msgBox.value
+        socket.send(msg)
+        msgBox.value = ""
+    }
+
+</script>
+</body>
+</html>

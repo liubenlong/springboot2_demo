@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * 第一个简单的 netty  http 服务器
+ *  netty  http 文件下载 服务器
  */
 public class MyHttpFileBrowserServer {
 
@@ -40,15 +40,21 @@ public class MyHttpFileBrowserServer {
         ServerBootstrap bootstrap = new ServerBootstrap();
         EventLoopGroup boss = new NioEventLoopGroup();
         EventLoopGroup work = new NioEventLoopGroup();
-        bootstrap.group(boss, work)
-                .handler(new LoggingHandler(LogLevel.DEBUG))
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new HttpBrowserServerInitializer());
+        try {
+            bootstrap.group(boss, work)
+                    .handler(new LoggingHandler(LogLevel.DEBUG))
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new HttpBrowserServerInitializer());
 
-        ChannelFuture f = bootstrap.bind(new InetSocketAddress(port)).sync();
-        System.out.println("http server started . port : " + port);
-        f.channel().closeFuture().sync();
-
+            ChannelFuture f = bootstrap.bind(new InetSocketAddress(port)).sync();
+            System.out.println("http server started . port : " + port);
+            f.channel().closeFuture().sync();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            boss.shutdownGracefully();
+            work.shutdownGracefully();
+        }
     }
 
     public static void main(String[] args) throws Exception {
