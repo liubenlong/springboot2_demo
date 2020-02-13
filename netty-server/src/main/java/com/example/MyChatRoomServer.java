@@ -34,13 +34,13 @@ import java.util.concurrent.*;
 import java.util.regex.Pattern;
 
 /**
- * netty  http 文件下载 服务器
+ * netty实现聊天室
  */
-public class MyWebSocketServer {
+public class MyChatRoomServer {
 
     int port;
 
-    public MyWebSocketServer(int port) {
+    public MyChatRoomServer(int port) {
         this.port = port;
     }
 
@@ -52,7 +52,7 @@ public class MyWebSocketServer {
             bootstrap.group(boss, work)
                     .handler(new LoggingHandler(LogLevel.DEBUG))
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new WebSocketServerInitializer());
+                    .childHandler(new ChatRoomServerInitializer());
 
             ChannelFuture f = bootstrap.bind(new InetSocketAddress(port)).sync();
             System.out.println("http server started . port : " + port);
@@ -66,30 +66,13 @@ public class MyWebSocketServer {
         }
     }
 
-
-    public void pushMsg(){
-        //模拟异步发送推送消息
-        ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1);
-        scheduledThreadPool.scheduleWithFixedDelay(() -> {
-            TextWebSocketFrame tws = new TextWebSocketFrame("服务器主动推送消息。当前服务器时间："+System.currentTimeMillis());
-            // 群发
-            ChannelSupervise.send2All(tws);
-        }, 0,1, TimeUnit.SECONDS);
-
-    }
-
     public static void main(String[] args) {
-        MyWebSocketServer server = new MyWebSocketServer(8080);// 8081为启动端口
-
-        server.pushMsg();
-
+        MyChatRoomServer server = new MyChatRoomServer(8080);// 8081为启动端口
         server.start();
     }
-
-
 }
 
-class WebSocketServerInitializer extends ChannelInitializer<SocketChannel> {
+class ChatRoomServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel channel) {
@@ -99,11 +82,11 @@ class WebSocketServerInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast("httpAggregator", new HttpObjectAggregator(512 * 1024))
                 // 支持异步发送大的码流(大的文件传输),但不占用过多的内存，防止java内存溢出
                 .addLast("http-chunked", new ChunkedWriteHandler())
-                .addLast(new WebSocketRequestHandler());// 请求处理器
+                .addLast(new ChatRoomRequestHandler());// 请求处理器
     }
 }
 
-class WebSocketRequestHandler extends SimpleChannelInboundHandler<Object> {
+class ChatRoomRequestHandler extends SimpleChannelInboundHandler<Object> {
 
     private WebSocketServerHandshaker handshaker;
 
@@ -124,6 +107,11 @@ class WebSocketRequestHandler extends SimpleChannelInboundHandler<Object> {
         //添加连接
         System.out.println("客户端加入连接：" + ctx.channel());
         ChannelSupervise.addChannel(ctx.channel());
+
+        TextWebSocketFrame tws = new TextWebSocketFrame(
+                "欢迎 " + ctx.channel().id().asShortText() + "; 当前在线总人数：" + ChannelSupervise.count());
+        ChannelSupervise.send2All(tws);
+
     }
 
     @Override
@@ -131,6 +119,10 @@ class WebSocketRequestHandler extends SimpleChannelInboundHandler<Object> {
         //断开连接
         System.out.println("客户端断开连接：" + ctx.channel());
         ChannelSupervise.removeChannel(ctx.channel());
+
+        TextWebSocketFrame tws = new TextWebSocketFrame(
+                "再见 " + ctx.channel().id().asShortText() + "; 当前在线总人数：" + ChannelSupervise.count());
+        ChannelSupervise.send2All(tws);
     }
 
     @Override
@@ -162,21 +154,11 @@ class WebSocketRequestHandler extends SimpleChannelInboundHandler<Object> {
 
         //处理客户端请求并返回应答消息
         String request = ((TextWebSocketFrame) frame).text();
-        System.out.println("服务端收到：" + request);
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("time",format.format(new Date()));
-        jsonObject.put("channelId",ctx.channel().id().asShortText());
-        jsonObject.put("request",request);
-
-        TextWebSocketFrame tws = new TextWebSocketFrame(jsonObject.toJSONString());
+        System.out.println(request);
+        TextWebSocketFrame tws = new TextWebSocketFrame(ctx.channel().id().asShortText() + "：" + request);
 
         // 群发
-//        ChannelSupervise.send2All(tws);
-
-        // 返回【谁发的发给谁】
-         ctx.channel().writeAndFlush(tws);
+        ChannelSupervise.send2All(tws);
     }
 
     /**
@@ -229,4 +211,3 @@ class WebSocketRequestHandler extends SimpleChannelInboundHandler<Object> {
         }
     }
 }
-
