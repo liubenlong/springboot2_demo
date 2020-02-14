@@ -35,6 +35,12 @@ import java.util.regex.Pattern;
 
 /**
  * netty  http 文件下载 服务器
+ *
+ * todo
+ * https://blog.csdn.net/moshowgame/article/details/83024867
+ * https://blog.csdn.net/moshowgame/article/details/80275084
+ * https://blog.csdn.net/moshowgame/article/details/91552993
+ *
  */
 public class MyWebSocketServer {
 
