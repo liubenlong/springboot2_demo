@@ -16,6 +16,9 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.stream.ChunkedFile;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
@@ -82,6 +85,7 @@ class ChatRoomServerInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast("httpAggregator", new HttpObjectAggregator(512 * 1024))
                 // 支持异步发送大的码流(大的文件传输),但不占用过多的内存，防止java内存溢出
                 .addLast("http-chunked", new ChunkedWriteHandler())
+                .addLast(new IdleStateHandler(5, 5, 3))
                 .addLast(new ChatRoomRequestHandler());// 请求处理器
     }
 }
@@ -209,5 +213,26 @@ class ChatRoomRequestHandler extends SimpleChannelInboundHandler<Object> {
         if (!HttpUtil.isKeepAlive(req) || res.status().code() != 200) {
             f.addListener(ChannelFutureListener.CLOSE);
         }
+    }
+
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (evt instanceof IdleStateEvent) {
+            IdleStateEvent event = (IdleStateEvent) evt;
+            if (event.state().equals(IdleState.READER_IDLE)) {
+                System.out.println("读空闲==");
+            } else if (event.state().equals(IdleState.WRITER_IDLE)) {
+                System.out.println("写空闲==");
+            } else if (event.state().equals(IdleState.ALL_IDLE)) {
+                System.out.println("读写空闲==");
+                ctx.channel().close();
+            } else {
+                System.out.println("error!!" + evt.getClass().toString());
+            }
+        } else {
+            System.out.println(evt.getClass().toString());
+        }
+
     }
 }
