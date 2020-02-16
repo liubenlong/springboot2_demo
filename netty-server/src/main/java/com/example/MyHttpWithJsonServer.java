@@ -20,17 +20,17 @@ import java.util.Map;
  */
 public class MyHttpWithJsonServer {
 
-    int port ;
+    int port;
 
-    public MyHttpWithJsonServer(int port){
+    public MyHttpWithJsonServer(int port) {
         this.port = port;
     }
 
-    public void start() throws Exception{
+    public void start() throws Exception {
         ServerBootstrap bootstrap = new ServerBootstrap();
         EventLoopGroup boss = new NioEventLoopGroup();
         EventLoopGroup work = new NioEventLoopGroup();
-        bootstrap.group(boss,work)
+        bootstrap.group(boss, work)
                 .handler(new LoggingHandler(LogLevel.DEBUG))
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new HttpServerWithJsonInitializer());
@@ -41,7 +41,7 @@ public class MyHttpWithJsonServer {
 
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         MyHttpWithJsonServer server = new MyHttpWithJsonServer(8080);// 8081为启动端口
         server.start();
     }
@@ -54,7 +54,7 @@ class HttpServerWithJsonInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();
         pipeline.addLast(new HttpServerCodec());// http 编解码
-        pipeline.addLast("httpAggregator",new HttpObjectAggregator(512*1024)); // http 消息聚合器                                                                     512*1024为接收的最大contentlength
+        pipeline.addLast("httpAggregator", new HttpObjectAggregator(512 * 1024)); // http 消息聚合器                                                                     512*1024为接收的最大contentlength
         pipeline.addLast(new HttpRequestWithJsonHandler());// 请求处理器
 
     }
@@ -71,10 +71,10 @@ class HttpRequestWithJsonHandler extends SimpleChannelInboundHandler<FullHttpReq
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest req) {
         // 获取请求的uri
         String uri = req.uri();
-        Map<String,String> resMap = new HashMap<>();
-        resMap.put("method",req.method().name());
-        resMap.put("uri",uri);
-        String msg = "<html><head><title>test</title></head><body>你请求uri为：" + uri+"</body></html>";
+        Map<String, String> resMap = new HashMap<>();
+        resMap.put("method", req.method().name());
+        resMap.put("uri", uri);
+        String msg = "<html><head><title>test</title></head><body>你请求uri为：" + uri + "</body></html>";
         // 创建http响应
         FullHttpResponse response = new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1,

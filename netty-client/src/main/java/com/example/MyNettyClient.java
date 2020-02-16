@@ -43,6 +43,7 @@ class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 客户端与服务器TCP链路链接成功后调用该方法
+     *
      * @param ctx
      */
     @Override
@@ -55,6 +56,7 @@ class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 读取到服务端相应后执行该方法
+     *
      * @param ctx
      * @param msg
      * @throws Exception
@@ -65,7 +67,7 @@ class TimeClientHandler extends ChannelInboundHandlerAdapter {
         byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
         String body = new String(bytes, "UTF-8");
-        System.out.println("服务端返回："+body);
+        System.out.println("服务端返回：" + body);
     }
 
     @Override

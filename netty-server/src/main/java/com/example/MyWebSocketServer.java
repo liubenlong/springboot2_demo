@@ -5,8 +5,6 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -14,33 +12,23 @@ import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.stream.ChunkedFile;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.util.CharsetUtil;
-import io.netty.util.concurrent.GlobalEventExecutor;
 
-import javax.activation.MimetypesFileTypeMap;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.*;
-import java.util.regex.Pattern;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * netty  http 文件下载 服务器
- *
+ * <p>
  * todo
  * https://blog.csdn.net/moshowgame/article/details/83024867
  * https://blog.csdn.net/moshowgame/article/details/80275084
  * https://blog.csdn.net/moshowgame/article/details/91552993
- *
  */
 public class MyWebSocketServer {
 
@@ -73,14 +61,14 @@ public class MyWebSocketServer {
     }
 
 
-    public void pushMsg(){
+    public void pushMsg() {
         //模拟异步发送推送消息
         ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1);
         scheduledThreadPool.scheduleWithFixedDelay(() -> {
-            TextWebSocketFrame tws = new TextWebSocketFrame("服务器主动推送消息。当前服务器时间："+System.currentTimeMillis());
+            TextWebSocketFrame tws = new TextWebSocketFrame("服务器主动推送消息。当前服务器时间：" + System.currentTimeMillis());
             // 群发
             ChannelSupervise.send2All(tws);
-        }, 0,1, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
 
     }
 
@@ -172,9 +160,9 @@ class WebSocketRequestHandler extends SimpleChannelInboundHandler<Object> {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("time",format.format(new Date()));
-        jsonObject.put("channelId",ctx.channel().id().asShortText());
-        jsonObject.put("request",request);
+        jsonObject.put("time", format.format(new Date()));
+        jsonObject.put("channelId", ctx.channel().id().asShortText());
+        jsonObject.put("request", request);
 
         TextWebSocketFrame tws = new TextWebSocketFrame(jsonObject.toJSONString());
 
@@ -182,7 +170,7 @@ class WebSocketRequestHandler extends SimpleChannelInboundHandler<Object> {
 //        ChannelSupervise.send2All(tws);
 
         // 返回【谁发的发给谁】
-         ctx.channel().writeAndFlush(tws);
+        ctx.channel().writeAndFlush(tws);
     }
 
     /**

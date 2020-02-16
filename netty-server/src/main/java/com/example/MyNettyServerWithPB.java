@@ -67,7 +67,7 @@ class TimeWithPBServerHandler extends ChannelInboundHandlerAdapter {
     private int count = 0;
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg)  {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         SubscribeReqProto.SubscribeReq req = (SubscribeReqProto.SubscribeReq) msg;
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

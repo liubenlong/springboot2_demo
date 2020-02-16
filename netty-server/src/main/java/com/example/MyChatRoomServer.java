@@ -1,12 +1,9 @@
 package com.example;
 
-import com.alibaba.fastjson.JSONObject;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -14,27 +11,13 @@ import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.stream.ChunkedFile;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
-import io.netty.util.concurrent.GlobalEventExecutor;
 
-import javax.activation.MimetypesFileTypeMap;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.*;
-import java.util.regex.Pattern;
 
 /**
  * netty实现聊天室
@@ -85,7 +68,7 @@ class ChatRoomServerInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast("httpAggregator", new HttpObjectAggregator(512 * 1024))
                 // 支持异步发送大的码流(大的文件传输),但不占用过多的内存，防止java内存溢出
                 .addLast("http-chunked", new ChunkedWriteHandler())
-                .addLast(new IdleStateHandler(5, 5, 3))
+                .addLast(new IdleStateHandler(10, 10, 30))
                 .addLast(new ChatRoomRequestHandler());// 请求处理器
     }
 }

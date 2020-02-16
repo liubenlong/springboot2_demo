@@ -21,12 +21,10 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- *  netty  http 文件下载 服务器
+ * netty  http 文件下载 服务器
  */
 public class MyHttpFileBrowserServer {
 
@@ -49,9 +47,9 @@ public class MyHttpFileBrowserServer {
             ChannelFuture f = bootstrap.bind(new InetSocketAddress(port)).sync();
             System.out.println("http server started . port : " + port);
             f.channel().closeFuture().sync();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             boss.shutdownGracefully();
             work.shutdownGracefully();
         }

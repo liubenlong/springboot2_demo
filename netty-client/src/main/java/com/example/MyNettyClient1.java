@@ -42,7 +42,7 @@ public class MyNettyClient1 {
 
 //客户端业务逻辑处理类
 class TimeClientHandler1 extends ChannelInboundHandlerAdapter {
-    private int count=0;
+    private int count = 0;
 
     /**
      * 客户端与服务器TCP链路链接成功后调用该方法
@@ -72,7 +72,7 @@ class TimeClientHandler1 extends ChannelInboundHandlerAdapter {
         byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
         String body = new String(bytes, "UTF-8");
-        System.out.println("第"+ count++ +"次受到服务端返回：" + body);
+        System.out.println("第" + count++ + "次受到服务端返回：" + body);
     }
 
     @Override
