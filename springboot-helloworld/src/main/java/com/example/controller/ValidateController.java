@@ -25,7 +25,7 @@ public class ValidateController {
     }
 
     @RequestMapping(value = "gettest", method = RequestMethod.GET)
-    public String test2(@Validated @RequestBody FatherVO father) {
+    public String test2(@Validated FatherVO father) {
         return father.getName();
     }
 
