@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.webank.erava.lock.config.DistributedLockConfig,\
+com.webank.erava.lock.service.DistributedLockService,\
+com.webank.erava.lock.distributedLock.DistributedLockAspect

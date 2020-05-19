@@ -16,6 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <lombok.version>1.18.4</lombok.version>
         <testng.version>6.8.7</testng.version>
+        <druidStarter>1.1.20</druidStarter>
     </properties>
 
     <modules>
@@ -25,6 +26,8 @@
 
 
         <module>springboot-helloworld</module>
+
+        <module>springboot-mystarter</module>
 
         <module>springboot-jpa</module>
         <module>springboot-mybatis</module>

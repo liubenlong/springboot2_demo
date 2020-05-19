@@ -23,6 +23,9 @@ stu:
   name: zhangsan
   age: 18
 
+hello:
+  enabled: true
+  a: hahaha
 
 #logging:
 #  level:

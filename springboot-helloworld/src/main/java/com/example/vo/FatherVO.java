@@ -12,5 +12,9 @@ public class FatherVO {
     private String name;
     @NotBlank(message = "父亲工作不可为空")
     private String work;
+
+
+
+    private Boolean a;
 }
 
