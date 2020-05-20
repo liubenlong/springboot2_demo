@@ -4,7 +4,7 @@ import com.example.pojo.Dog;
 import com.example.pojo.Person;
 import com.example.pojo.Stu;
 import com.example.service.HelloService;
-import com.webank.erava.lock.distributedLock.DistributedLock;
+//import com.webank.erava.lock.distributedLock.DistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,8 @@ public class HelloController {
 
 
     @RequestMapping("/annotition")
-    @DistributedLock(key = "#dog.name.concat('d')", expire = 1000, el = true)
+    //分布式锁，自定义springboot stater
+//    @DistributedLock(key = "#dog.name.concat('d')", expire = 1000, el = true)
     @ResponseBody
     public String annotition(Dog dog) {
         return dog.getName();
