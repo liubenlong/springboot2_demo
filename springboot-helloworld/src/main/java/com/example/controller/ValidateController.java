@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.Default;
 
 @RestController("validateController")
 @Slf4j
@@ -25,7 +26,7 @@ public class ValidateController {
     }
 
     @RequestMapping(value = "gettest", method = RequestMethod.GET)
-    public String test2(@Validated FatherVO father) {
+    public String test2(@Validated(value = {Default.class, FatherVO.A.class}) FatherVO father) {
         return father.getName();
     }
 

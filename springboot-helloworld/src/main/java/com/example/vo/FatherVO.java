@@ -8,7 +8,10 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 public class FatherVO {
-    @NotBlank(message = "父亲名字不可为空")
+
+    public interface A{}
+
+    @NotBlank(message = "父亲名字不可为空", groups = A.class)
     private String name;
     @NotBlank(message = "父亲工作不可为空")
     private String work;

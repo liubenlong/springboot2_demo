@@ -29,12 +29,12 @@ public class DistributedLockAspect {
     }
 
     @Around("pointcout() && @annotation(distributedLock)")
-    public void distributedLock(ProceedingJoinPoint point, DistributedLock distributedLock) throws Throwable {
+    public Object distributedLock(ProceedingJoinPoint point, DistributedLock distributedLock) throws Throwable {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         try {
             String key = distributedLock.el() ? getKey(point) : distributedLock.key(); // 获取
             if (distributedLockService.tryLock(key, distributedLock.expire(), uuid)) {
-                point.proceed();
+               return point.proceed();
             } else {
                 throw new RuntimeException("请勿重复提交！");
             }
