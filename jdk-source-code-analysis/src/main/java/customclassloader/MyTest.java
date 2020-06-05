@@ -2,6 +2,7 @@ package customclassloader;
 
 import java.lang.reflect.Method;
 
+//参考：https://zhuanlan.zhihu.com/p/141527120
 public class MyTest {
 
     public static void main(String[] args) throws Exception {
