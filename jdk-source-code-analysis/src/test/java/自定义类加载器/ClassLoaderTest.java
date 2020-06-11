@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.concurrent.TimeUnit;
 
 public class ClassLoaderTest {
 
@@ -17,37 +18,40 @@ public class ClassLoaderTest {
      * 推荐此方法
      */
     @Test
-    public void test0() {
-        try {
-            URLClassLoader diskLoader = new URLClassLoader(new URL[]{new URL("file:/D:/liubenlong/a/")});//最后面的斜杠需要添加
-            URLClassLoader diskLoader1 = new URLClassLoader(new URL[]{new URL("file:/D:/liubenlong/b/")});
+    public void test0() throws Exception {
+        test4();
 
-            //加载class文件
-            Class clz = diskLoader.loadClass("Hello");
-            Constructor constructor = clz.getConstructor(String.class);
-            Object obj = constructor.newInstance("tom");
+        System.gc();
 
-            /**
-             * 类Hello引用了类Dog，类加载器会主动加载被引用的类。
-             * 注意一般是我们使用 URLClassLoader 实现自定义的类加载器。如果使用classLoader，则需要重写findClass方法来实现类字节码的加载
-             */
-            Method method = clz.getMethod("sayHello", null);
-            //通过反射调用Test类的say方法
-            method.invoke(obj, null);
+        TimeUnit.SECONDS.sleep(5);
+    }
 
+    public void test4() throws Exception {
+        System.out.println(this.getClass().getClassLoader());
 
+        URLClassLoader diskLoader = new URLClassLoader(new URL[]{new URL("file:/D:/liubenlong/a/")});//最后面的斜杠需要添加
+        URLClassLoader diskLoader1 = new URLClassLoader(new URL[]{new URL("file:/D:/liubenlong/b/")});
 
-            Class clz1 = diskLoader1.loadClass("Hello");
-            Constructor constructor1 = clz1.getConstructor(String.class);
-            Object obj1 = constructor1.newInstance("cat");
+        //加载class文件
+        Class clz = diskLoader.loadClass("Hello");
+        Constructor constructor = clz.getConstructor(String.class);
+        Object obj = constructor.newInstance("tom");
 
-            Method method1 = clz1.getMethod("sayHello", null);
-            //通过反射调用Test类的say方法
-            method1.invoke(obj1, null);
+        /**
+         * 类Hello引用了类Dog，类加载器会主动加载被引用的类。
+         * 注意一般是我们使用 URLClassLoader 实现自定义的类加载器。如果使用classLoader，则需要重写findClass方法来实现类字节码的加载
+         */
+        Method method = clz.getMethod("sayHello", null);
+        //通过反射调用Test类的say方法
+        method.invoke(obj, null);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Class clz1 = diskLoader1.loadClass("Hello");
+        Constructor constructor1 = clz1.getConstructor(String.class);
+        Object obj1 = constructor1.newInstance("cat");
+
+        Method method1 = clz1.getMethod("sayHello", null);
+        //通过反射调用Test类的say方法
+        method1.invoke(obj1, null);
     }
 
     /**
@@ -74,8 +78,6 @@ public class ClassLoaderTest {
             method.invoke(obj, null);
 
 
-
-
             Class clz1 = diskLoader1.findClass("D:\\liubenlong\\b\\", "Hello");
 
             Constructor constructor1 = clz1.getConstructor(String.class);
@@ -92,6 +94,7 @@ public class ClassLoaderTest {
 
 
     /**
+     *
      */
     @Test
     public void test2() throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -124,7 +127,6 @@ public class ClassLoaderTest {
             Method method = clz.getMethod("sayHello", null);
             //通过反射调用Test类的say方法
             method.invoke(obj, null);
-
 
 
         } catch (Exception e) {
