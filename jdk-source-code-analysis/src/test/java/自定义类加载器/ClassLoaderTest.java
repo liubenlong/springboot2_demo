@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 public class ClassLoaderTest {
@@ -20,6 +22,9 @@ public class ClassLoaderTest {
     @Test
     public void test0() throws Exception {
         test4();
+
+        Collection<String> a = new ArrayList<>();
+
 
         System.gc();
 

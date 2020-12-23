@@ -18,12 +18,15 @@ import java.util.*;
  *
  * <p>
  * 示例 1：
- * 输入：req_skills = ["java","nodejs","reactjs"], people = [["java"],["nodejs"],["nodejs","reactjs"]]
+ * 输入：req_skills = ["java","nodejs","reactjs"],
+ *      people = [["java"],["nodejs"],["nodejs","reactjs"]]
  * 输出：[0,2]
  * <p>
  * 示例 2：
  * <p>
- * 输入：req_skills = ["algorithms","math","java","reactjs","csharp","aws"], people = [["algorithms","math","java"],["algorithms","math","reactjs"],["java","csharp","aws"],["reactjs","csharp"],["csharp","math"],["aws","java"]]
+ * 输入：req_skills = ["algorithms","math","java","reactjs","csharp","aws"],
+ *      people = [["algorithms","math","java"],["algorithms","math","reactjs"],["java","csharp","aws"],
+ *      ["reactjs","csharp"],["csharp","math"],["aws","java"]]
  * 输出：[1,2]
  * <p>
  * <p>

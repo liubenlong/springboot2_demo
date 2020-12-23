@@ -5,12 +5,10 @@ import com.example.pojo.Person;
 import com.example.pojo.Stu;
 import com.example.service.HelloService;
 //import com.webank.erava.lock.distributedLock.DistributedLock;
+import com.example.vo.HelloVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -58,6 +56,12 @@ public class HelloController {
     @GetMapping("/hello")
     public String hello() {
         return "Welcome to springboot2 world ~";
+    }
+
+
+    @PostMapping("/hello2")
+    public String hello2(@RequestBody HelloVO helloVO) {
+        return helloVO.toString();
     }
 
     @GetMapping("/hello1")
