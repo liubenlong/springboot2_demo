@@ -17,48 +17,42 @@ public class 算法 {
      * 要求时间复杂度O(n)
      * O(n)是考察重点。空间换取时间
      */
-    public static List<Integer[]> getChongfu(int[] datas, int target) {
-        Map<Integer, Integer> map = new HashMap<>();//<差值，index>
-        for (int i = 0; i < datas.length; i++) {
-            map.put(datas[i], i);
-        }
+    public static List<int[]> getChongfu(int[] datas, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        List<int[]> result = new ArrayList<>();
 
-        List<Integer[]> list = new ArrayList<>();
         for (int i = 0; i < datas.length; i++) {
-            int sum = target + datas[i];
-            if (map.get(sum) != null) {
-                Integer[] result = new Integer[]{i, map.get(sum)};
-                list.add(result);
+            if (map.get(datas[i]) != null) {
+                result.add(new int[]{map.get(datas[i]), i});
+            } else {
+                map.put(datas[i] + target, i);
             }
         }
-
-        return list;
+        return result;
     }
 
     @Test
     public void test() {
         int[] datas = {1, 3, 5, 7, 2, 6, 9, 8};//没有重复值
 
-        List<Integer[]> list = getChongfu(datas, 6);
-        for (Integer[] integers : list) {
+        List<int[]> list = getChongfu(datas, 6);
+        for (int[] integers : list) {
             System.out.println(Arrays.toString(integers));
         }
     }
 
 
-    @Data
-    class Node {
-        private Node left;
-        private Node right;
-        private int data;
+    /**
+     * Definition for singly-linked list
+     */
+    class ListNode {
+        int val;//数据内容
+        ListNode next;
 
-        public Node(int data) {
-            this.data = data;
+        ListNode(int x) {
+            val = x;
         }
     }
-
-
-
 
     /**
      * 两个有序链表合并
@@ -79,59 +73,34 @@ public class 算法 {
         listNode13.next = listNode14;
         listNode14.next = listNode15;
 
-        ListNode head = mergeTwoLists(listNode1, listNode11);
+
+        ListNode listNode16 = new ListNode(1);
+        ListNode listNode17 = new ListNode(2);
+        ListNode listNode18 = new ListNode(4);
+        ListNode listNode19 = new ListNode(6);
+        listNode16.next = listNode17;
+        listNode17.next = listNode18;
+        listNode18.next = listNode19;
+
+        ListNode head = mergeTwoLists1(listNode1, listNode11);
         while (head != null) {
             System.out.print(head.val + "   ");
             head = head.next;
         }
     }
 
-    /**
-     * Definition for singly-linked list
-     */
-    class ListNode {
-        int val;//数据内容
-        ListNode next;
 
-        ListNode(int x) {
-            val = x;
-        }
-    }
+    public ListNode mergeTwoLists1(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
 
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (null == l1) return l2;
-        if (null == l2) return l1;
-
-        ListNode head = null;
-        if (l1.val <= l2.val) {
-            head = l1;
-            head.next = mergeTwoLists(l1.next, l2);
+        if (l1.val < l2.val) {
+            l1.next = mergeTwoLists1(l1.next, l2);
+            return l1;
         } else {
-            head = l2;
-            head.next = mergeTwoLists(l1, l2.next);
+            l2.next = mergeTwoLists1(l2.next, l1);
+            return l2;
         }
-        return head;
-    }
-
-
-    @Test
-    public void test2() {
-        ListNode listNode11 = new ListNode(1);
-        ListNode listNode13 = new ListNode(3);
-        ListNode listNode14 = new ListNode(4);
-        ListNode listNode15 = new ListNode(5);
-        listNode11.next = listNode13;
-        listNode13.next = listNode14;
-        listNode14.next = listNode15;
-
-        print(listNode11);
-    }
-
-    private void print(ListNode node) {
-        if (node.next != null) {
-            print(node.next);
-        }
-        System.out.println(node.val);
     }
 
 
@@ -148,6 +117,7 @@ public class 算法 {
      */
     @Test
     public void test3() {
+        ListNode listNode0 = new ListNode(1);
         ListNode listNode1 = new ListNode(1);
         ListNode listNode2 = new ListNode(2);
         ListNode listNode3 = new ListNode(3);
@@ -156,6 +126,7 @@ public class 算法 {
         ListNode listNode6 = new ListNode(4);
         ListNode listNode7 = new ListNode(4);
         ListNode listNode8 = new ListNode(5);
+        listNode0.next = listNode1;
         listNode1.next = listNode2;
         listNode2.next = listNode3;
         listNode3.next = listNode4;
@@ -165,43 +136,35 @@ public class 算法 {
         listNode6.next = listNode7;
         listNode7.next = listNode8;
 
-        ListNode head = deleteDuplication(listNode1);
+        ListNode head = deleteDuplication(listNode0);
         while (head != null) {
             System.out.print(head.val + "   ");
             head = head.next;
         }
     }
 
-    public ListNode deleteDuplication(ListNode pHead) {
-        ListNode pPreNode = null;
-        ListNode pNode = pHead;
-        while (pNode != null) {
-            ListNode pNext = pNode.next;
-            boolean needDelete = false;
-            if (pNext != null && pNext.val == pNode.val)
-                needDelete = true;
-            if (!needDelete) {
-                pPreNode = pNode;
-                pNode = pNode.next;
-            } else {
-                ListNode pDeleteNode = pNode;
-                int value = pDeleteNode.val;
-                while (pDeleteNode != null && pDeleteNode.val == value) {
-                    pNext = pDeleteNode.next;
-                    pDeleteNode = pNext;
+    public ListNode deleteDuplication(ListNode head) {
+        //定义三个指针
+        ListNode pre = head, c = head, n = head == null ? null : head.next;
+
+        while (n != null) {
+            if (c.val == n.val) {
+                while (c.val == n.val && n != null) {
+                    n = n.next;
                 }
-                if (null== pPreNode )
-                    pHead = pNext;
-                else
-                    pPreNode.next = pNext;
-                pNode = pNext;
+                c = n;
+                if (n != null) n = n.next;
+                //处理head
+                if (head.next != null && head.val == head.next.val) head = c;
+                pre.next = c;
+            } else {
+                pre = c;
+                c = n;
+                n = n.next;
             }
         }
-
-        return pHead;
+        return head;
     }
-
-
 
 
 }
