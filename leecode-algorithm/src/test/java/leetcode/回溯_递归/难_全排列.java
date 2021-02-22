@@ -69,7 +69,7 @@ public class 难_全排列 {
         if (begin == end) { //  一次递归结束。将整个数组打印出来
             pringArray(nums);
         }
-        // for循环将数组中所有的元素和第一个元素进行交换。然后进行全排列。
+        // for循环将数组中所有的元素和第i个元素进行交换。然后进行全排列。
         for (int i = begin; i <= end; i++) {
             swap(nums, i, begin);
             // 把剩下的元素都做全排列。
